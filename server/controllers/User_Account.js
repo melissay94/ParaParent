@@ -115,8 +115,8 @@ const getToken = (request, response) => {
 };
 
 // Export all the functions
-module.exports.loginPage = loginComp;
-module.exports.signupPage = signupComp;
+module.exports.loginComp = loginComp;
+module.exports.signupComp = signupComp;
 module.exports.logout = logout;
 module.exports.login = login;
 module.exports.signup = signup;
