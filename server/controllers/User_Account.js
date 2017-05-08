@@ -9,7 +9,7 @@ const loginComp = (req, res) => {
 };
 
 const signupComp = (req, res) => {
-  res.render('signup', { csrfToken: req.csrfToken() });
+  res.render('welcome', { csrfToken: req.csrfToken() });
 };
 
 // Set up logout logic
