@@ -15,7 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 	</head>
 	<body>
-		<nav class="navbar navbar-inverse">
+		<nav class="navbar">
 		    <div class="navbar-header">
 		      <h3 class="navbar-brand">ParaParent</h3>
 		    </div>
@@ -25,10 +25,19 @@
 		      <li><a href="#">Help</a></li>
 		    </ul>
 		</nav>
-		<div id="userInfo" class="container">
-		</div>
-		<div class="errorMessage">
-		</div>
+		 <div class="col-md-4 new-user">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" id="signupButton" href="/signup">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="applyButton" href="/apply">Apply to Us</a>
+        </li>
+      </ul>
+        <div id="userInfo" class="container">
+        </div>
+        <div class="errorMessage"></div>
+      </div>
 		<script src="/assets/welcomeBundle.js"></script>
 	</body>
 </html>
