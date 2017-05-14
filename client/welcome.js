@@ -7,7 +7,7 @@ const handleLogin = (e) => {
 		return false;
 	}
 
-	sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize(), redirect);
+	sendAjax('POST', $("#loginForm").attr("action"), $("#loginUserForm").serialize(), redirect);
 
 	return false;
 };
@@ -29,14 +29,33 @@ const handleSignup = (e) => {
 		return false;
 	}
 
-	sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+	sendAjax('POST', $("#signupForm").attr("action"), $("#signupUserForm").serialize(), redirect);
 
 	return false;
 };
 	
-// Renders the login component - TODO 
-	
-	
+// Renders the login component 
+const renderLogin = function() {
+	return(
+		<form id="loginUserForm" name="loginUserForm"
+			onSubmit={this.handleSubmit}
+			action="/login"
+			method="POST"
+			className="mainForm">
+			<div className="form-group">
+				<input id="email" className="form-control" type="text" placeholder="Email Address" />
+				<input id="pass" className="form-control" type="password" placeholder="Password" />
+			</div>
+			<div className="form-group">
+				<div  className="offset-sm-2 col-sm-4">
+					<input type="hidden" name="_csrf" value={this.props.csrf} />
+	                <input className="formSubmit btn" type="submit" value="Login" />   
+	             </div>
+			</div>
+		</form>
+	);
+};
+		
 // Renders the signup component 
 const renderSignup = function() {
 	return (
@@ -48,19 +67,22 @@ const renderSignup = function() {
 				className="mainForm">
 	            <div className="form-group">
 	           		<input id="first" className="form-control" type="text" name="first" placeholder="First Name"/>
-								<input id="last" className="form-control" type="text" name="last" placeholder="Last Name"/>
+					<input id="last" className="form-control" type="text" name="last" placeholder="Last Name"/>
 	            </div>
 	            <div className="form-group">
 	           		<input id="email" className="form-control" type="text" name="email" placeholder="Email Address"/>
-								<input id="phone" className="form-control" type="text" name="phone" placeholder="Phone Number"/>
+					<input id="phone" className="form-control" type="text" name="phone" placeholder="Phone Number"/>
 	            </div>
 	            <div className="form-group">
-								<input id="pass" className="form-control" type="password" name="pass" placeholder="Password"/>
-								<input id="pass2" className="form-control" type="password" name="pass2" placeholder="Retype Password"/>
+					<input id="pass" className="form-control" type="password" name="pass" placeholder="Password"/>
+					<input id="pass2" className="form-control" type="password" name="pass2" placeholder="Retype Password"/>
+	            </div>
+	            <div className="form-group">
+	            	<input id="invite" className="form-control" type="text" name="invite" placeholder="Invite Code"/>
 	            </div>
 	            <div className="form-group">
 	              <div  className="offset-sm-2 col-sm-4">
-									<input type="hidden" name="_csrf" value={this.props.csrf} />
+					<input type="hidden" name="_csrf" value={this.props.csrf} />
 	                <input className="formSubmit btn" type="submit" value="Sign Up Now!" />   
 	              </div>
 	            </div>
@@ -82,6 +104,20 @@ const createSignupComp = function(csrf) {
 		document.querySelector("#userInfo")
 	);
 };
+
+// Sets up the component for the page
+const createLoginComp = function(csrf) {
+
+	const LoginComp = React.createClass({
+		handleSubmit: handleLogin,
+		render: renderLogin
+	});
+
+	ReactDOM.render(
+		<LoginComp csrf={csrf} />,
+		document.querySelector("#userPopup")
+	);
+}
 	
 const setup = function(csrf) {
 	createSignupComp(csrf);
