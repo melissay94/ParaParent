@@ -72,26 +72,35 @@ var handleApply = function handleApply(e) {
 // Renders the login component for a worker
 var renderWorkerLogin = function renderWorkerLogin() {
 	return React.createElement(
-		'form',
-		{ id: 'loginWorkerForm', name: 'loginWorkerForm',
-			onSubmit: this.handleSubmit,
-			action: '/loginWorker',
-			method: 'POST',
-			className: 'mainForm' },
+		'div',
+		null,
 		React.createElement(
-			'div',
-			{ className: 'form-group' },
-			React.createElement('input', { id: 'email', className: 'form-control', type: 'text', placeholder: 'Email Address' }),
-			React.createElement('input', { id: 'pass', className: 'form-control', type: 'password', placeholder: 'Password' })
+			'h3',
+			null,
+			'Worker Login'
 		),
 		React.createElement(
-			'div',
-			{ className: 'form-group' },
+			'form',
+			{ id: 'loginWorkerForm', name: 'loginWorkerForm',
+				onSubmit: this.handleSubmit,
+				action: '/loginWorker',
+				method: 'POST',
+				className: 'mainForm' },
 			React.createElement(
 				'div',
-				{ className: 'offset-sm-2 col-sm-4' },
-				React.createElement('input', { type: 'hidden', name: '_csrf', value: this.props.csrf }),
-				React.createElement('input', { className: 'formSubmit btn', type: 'submit', value: 'Login' })
+				{ className: 'form-group' },
+				React.createElement('input', { id: 'email', className: 'form-control', type: 'text', placeholder: 'Email Address' }),
+				React.createElement('input', { id: 'pass', className: 'form-control', type: 'password', placeholder: 'Password' })
+			),
+			React.createElement(
+				'div',
+				{ className: 'form-group' },
+				React.createElement(
+					'div',
+					{ className: 'offset-sm-2 col-sm-4' },
+					React.createElement('input', { type: 'hidden', name: '_csrf', value: this.props.csrf }),
+					React.createElement('input', { className: 'formSubmit btn', type: 'submit', value: 'Login' })
+				)
 			)
 		)
 	);
@@ -160,7 +169,7 @@ var createLoginWorkerComp = function createLoginWorkerComp(csrf) {
 		displayName: 'LoginComp',
 
 		handleSubmit: handleWorkerLogin,
-		render: renderLogin
+		render: renderWorkerLogin
 	});
 
 	ReactDOM.render(React.createElement(LoginComp, { csrf: csrf }), document.querySelector("#userPopup"));
@@ -203,26 +212,35 @@ var handleSignup = function handleSignup(e) {
 // Renders the login component for a customer
 var renderUserLogin = function renderUserLogin() {
 	return React.createElement(
-		'form',
-		{ id: 'loginUserForm', name: 'loginUserForm',
-			onSubmit: this.handleSubmit,
-			action: '/loginUser',
-			method: 'POST',
-			className: 'mainForm' },
+		'div',
+		null,
 		React.createElement(
-			'div',
-			{ className: 'form-group' },
-			React.createElement('input', { id: 'email', className: 'form-control', type: 'text', placeholder: 'Email Address' }),
-			React.createElement('input', { id: 'pass', className: 'form-control', type: 'password', placeholder: 'Password' })
+			'h3',
+			null,
+			'Customer Login'
 		),
 		React.createElement(
-			'div',
-			{ className: 'form-group' },
+			'form',
+			{ id: 'loginUserForm', name: 'loginUserForm',
+				onSubmit: this.handleSubmit,
+				action: '/loginUser',
+				method: 'POST',
+				className: 'mainForm' },
 			React.createElement(
 				'div',
-				{ className: 'offset-sm-2 col-sm-4' },
-				React.createElement('input', { type: 'hidden', name: '_csrf', value: this.props.csrf }),
-				React.createElement('input', { className: 'formSubmit btn', type: 'submit', value: 'Login' })
+				{ className: 'form-group' },
+				React.createElement('input', { id: 'email', className: 'form-control', type: 'text', placeholder: 'Email Address' }),
+				React.createElement('input', { id: 'pass', className: 'form-control', type: 'password', placeholder: 'Password' })
+			),
+			React.createElement(
+				'div',
+				{ className: 'form-group' },
+				React.createElement(
+					'div',
+					{ className: 'offset-sm-2 col-sm-4' },
+					React.createElement('input', { type: 'hidden', name: '_csrf', value: this.props.csrf }),
+					React.createElement('input', { className: 'formSubmit btn', type: 'submit', value: 'Login' })
+				)
 			)
 		)
 	);
@@ -297,7 +315,7 @@ var createLoginUserComp = function createLoginUserComp(csrf) {
 		displayName: 'LoginComp',
 
 		handleSubmit: handleUserLogin,
-		render: renderLogin
+		render: renderUserLogin
 	});
 
 	ReactDOM.render(React.createElement(LoginComp, { csrf: csrf }), document.querySelector("#userPopup"));
@@ -515,6 +533,9 @@ var checkSelected = function checkSelected(csrf) {
 var setup = function setup(csrf) {
 	var applyButton = document.querySelector("#applyButton");
 	var signupButton = document.querySelector("#signupButton");
+	var login = document.querySelector("#login");
+	var loginCustomer = document.querySelector("#userLoginButton");
+	var loginWorker = document.querySelector("#wokerLoginButton");
 
 	applyButton.addEventListener("click", function (e) {
 		e.preventDefault();
@@ -525,6 +546,24 @@ var setup = function setup(csrf) {
 	signupButton.addEventListener("click", function (e) {
 		e.preventDefault();
 		createSignupComp(csrf);
+		return false;
+	});
+
+	login.addEventListener("click", function (e) {
+		e.preventDefault();
+		createLoginUserComp(csrf);
+		return false;
+	});
+
+	loginCustomer.addEventListener("click", function (e) {
+		e.preventDefault();
+		createLoginUserComp(csrf);
+		return false;
+	});
+
+	loginWorker.addEventListener("click", function (e) {
+		e.preventDefault();
+		createLoginWorkerComp(csrf);
 		return false;
 	});
 

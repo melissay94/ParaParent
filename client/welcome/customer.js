@@ -37,22 +37,25 @@ const handleSignup = (e) => {
 // Renders the login component for a customer
 const renderUserLogin = function() {
 	return(
-		<form id="loginUserForm" name="loginUserForm"
-			onSubmit={this.handleSubmit}
-			action="/loginUser"
-			method="POST"
-			className="mainForm">
-			<div className="form-group">
-				<input id="email" className="form-control" type="text" placeholder="Email Address" />
-				<input id="pass" className="form-control" type="password" placeholder="Password" />
-			</div>
-			<div className="form-group">
-				<div  className="offset-sm-2 col-sm-4">
-					<input type="hidden" name="_csrf" value={this.props.csrf} />
-	                <input className="formSubmit btn" type="submit" value="Login" />   
-	             </div>
-			</div>
-		</form>
+		<div>
+			<h3>Customer Login</h3>
+			<form id="loginUserForm" name="loginUserForm"
+				onSubmit={this.handleSubmit}
+				action="/loginUser"
+				method="POST"
+				className="mainForm">
+				<div className="form-group">
+					<input id="email" className="form-control" type="text" placeholder="Email Address" />
+					<input id="pass" className="form-control" type="password" placeholder="Password" />
+				</div>
+				<div className="form-group">
+					<div  className="offset-sm-2 col-sm-4">
+						<input type="hidden" name="_csrf" value={this.props.csrf} />
+		                <input className="formSubmit btn" type="submit" value="Login" />   
+		             </div>
+				</div>
+			</form>
+		</div>
 	);
 };
 		
@@ -111,7 +114,7 @@ const createLoginUserComp = function(csrf) {
 
 	const LoginComp = React.createClass({
 		handleSubmit: handleUserLogin,
-		render: renderLogin
+		render: renderUserLogin
 	});
 
 	ReactDOM.render(

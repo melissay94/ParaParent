@@ -148,6 +148,9 @@ const checkSelected = function(csrf) {
 const setup = function(csrf) {
 	const applyButton = document.querySelector("#applyButton");
 	const signupButton = document.querySelector("#signupButton");
+	const login = document.querySelector("#login");
+	const loginCustomer = document.querySelector("#userLoginButton");
+	const loginWorker = document.querySelector("#wokerLoginButton");
 	
 	applyButton.addEventListener("click", (e) => {
 		e.preventDefault();
@@ -158,6 +161,24 @@ const setup = function(csrf) {
 	signupButton.addEventListener("click", (e) => {
 		e.preventDefault();
 		createSignupComp(csrf);
+		return false;
+	});
+
+	login.addEventListener("click", (e) => {
+		e.preventDefault();
+		createLoginUserComp(csrf);
+		return false;
+	});
+
+	loginCustomer.addEventListener("click", (e) => {
+		e.preventDefault();
+		createLoginUserComp(csrf);
+		return false;
+	});
+
+	loginWorker.addEventListener("click", (e) => {
+		e.preventDefault();
+		createLoginWorkerComp(csrf);
 		return false;
 	});
 	
