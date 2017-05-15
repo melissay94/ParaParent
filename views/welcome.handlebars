@@ -1,43 +1,60 @@
 <html lang="en">
-	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>ParaParent</title>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
-  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		<link rel="shortcut icon" href="/assets/img/ParaParentLogo.png"/>
-		<link rel="stylesheet" type="text/css" href="/assets/style.css"/>
-	</head>
-	<body>
-		<nav class="navbar">
-		    <div class="navbar-header">
-		      <h3 class="navbar-brand">ParaParent</h3>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li><a href="#">Our Services</a></li>
-		      <li><a href="#">Why Us</a></li>
-		      <li><a href="#">Help</a></li>
-		    </ul>
-		</nav>
-		 <div class="col-md-4 new-user">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" id="signupButton" href="/signup">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="applyButton" href="/apply">Apply to Us</a>
-        </li>
-      </ul>
-        <div id="userInfo" class="container">
-        </div>
-        <div class="errorMessage"></div>
-      </div>
-		<script src="/assets/welcomeBundle.js"></script>
-	</body>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ParaParent</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="shortcut icon" href="/assets/img/ParaParentLogo.png"/>
+	<link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<h3 href="#" class="navbar-brand">ParaParent</h3>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav" style="display:inline-block;">
+					<li><a href="#userServices">Our Services</a></li>
+					<li><a href="#whyUs">Why Us</a></li>
+					<li style="float:right; font-weight:bold; margin-right: -205px;"><a href="#">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="tagline container">
+		<h2 style="font-weight: bold;">When you're sick,</h2>
+		<h2>sometimes you just want a parent</h2>
+	</div>
+	<div class="col-md-4 new-user">
+		<div class="container-fluid">
+		<ul class="nav row">
+			<li class="nav-item col-sm-6">
+				<a class="nav-link form-nav" id="signupButton" href="/signup">Sign Up</a>
+			</li>
+			<li class="nav-item col-sm-6">
+				<a class="nav-link form-nav" id="applyButton" href="/apply">Apply to Us</a>
+			</li>
+		</ul>
+		</div>
+		<div id="userInfo" class="container">
+		</div>
+		<div class="errorMessage"></div>
+	</div>
+		<img src="assets/img/bannerBackground.jpg" id="banner" />
+	<div id="userServices"></div>
+	<div id="whyUs" class="jumbotron">
+		<h3>Why Us</h3>
+		<p> I mean, not us. This is just a school project</p>
+		<p> Seriously, we don't actually do any of these things</p>
+	</div>
+	<script src="/assets/welcomeBundle.js"></script>
+</body>
 </html>

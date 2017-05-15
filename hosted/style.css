@@ -1,4 +1,140 @@
-h3 {
-	color: #6ab6d6;
+
+body {
+	background-color: #EBEBEB;
+}
+
+.navbar-default {
+	background-color: #EBEBEB;
+	margin-bottom: 0px;
+}
+
+.navbar-default .navbar-header {
+	width: 12%;
+}
+.navbar-default .navbar-header h3{
+	color: #6BB6D6;
+	font-size: 30px;
+	font-weight: bold;
 	font-family: "Roboto", sans-serif;
+	padding: 0px;
+}
+.navbar-nav {
+	width: 88%;
+}
+.navbar-default li{
+	padding-top: 10px;
+}
+.tagline {
+	padding: 0px;
+	padding-bottom: 15px;
+}
+.tagline h2 {
+	margin: 0px;
+}
+#banner {
+	width:100%;
+}
+
+.new-user {
+	position: absolute;
+	min-height: 880px;
+	right: 40px;
+	top: 120px;
+	background-color: #6BB6D6;
+	padding-top: 30px;
+}
+
+.new-user .btn {
+	border-radius: 0px;
+	border: none;
+	background-color: dimgrey;
+	color: #EBEBEB;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 18px;
+	float:right;
+}
+#userServices {
+	padding-top: 100px;
+}
+.form-control {
+	background-color: #EBEBEB;
+	color: #111;
+}
+
+.top-form {
+    border-bottom-right-radius: 0em;
+    border-bottom-left-radius: 0em;
+    border-bottom: none;
+}
+
+.bottom-form {
+	border-top-right-radius: 0em;
+	border-top-left-radius: 0em;
+	margin-bottom: 50px;
+}
+
+.form-nav {
+	font-size: 18px;
+	color: dimgrey;
+	margin-bottom: 50px;
+	font-weight: bold;
+}
+
+.form-nav:focus {
+	border-bottom: 2px dimgrey solid;
+	background-color: none;
+}
+
+.form-nav:hover {
+	background: pink;
+}
+
+#signupUserForm .btn {
+	margin-top: 100px; 
+}
+
+.services h3, .jumbotron h3 {
+	color:#111;
+	text-align: center;
+	font-size: 30px;
+	padding: 25px;
+}
+.serviceIcon:hover {
+	background-color: lightgrey;
+}
+
+.serviceIcon:focus {
+	border-bottom: 2px dimgrey solid;
+}
+
+.serviceIcon img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100px;
+}
+
+.serviceIcon h3 {
+	color: #111;
+	text-align: center;
+	font-size: 18px;
+}
+
+#serviceExplained .jumbotron {
+	background-color: #EBEBEB;
+	text-align: center;
+	padding-top: 50px;
+	min-height: 400px;
+}
+
+.jumbotron {
+	background-color: #6BB6D6;
+	text-align: center;
+	padding-top: 50px;
+	min-height: 600px;
+}
+
+#serviceExplained p {
+	color: #6BB6D6;
+	font-weight: bold;
 }

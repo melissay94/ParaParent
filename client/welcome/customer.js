@@ -66,23 +66,23 @@ const renderSignup = function() {
 				method="POST" 
 				className="mainForm">
 	            <div className="form-group">
-	           		<input id="first" className="form-control" type="text" name="first" placeholder="First Name"/>
-								<input id="last" className="form-control" type="text" name="last" placeholder="Last Name"/>
+	           		<input id="first" className="form-control top-form" type="text" name="first" placeholder="First Name"/>
+					<input id="last" className="form-control bottom-form" type="text" name="last" placeholder="Last Name"/>
 	            </div>
 	            <div className="form-group">
-	           		<input id="email" className="form-control" type="text" name="email" placeholder="Email Address"/>
-								<input id="phone" className="form-control" type="text" name="phone" placeholder="Phone Number"/>
+	           		<input id="email" className="form-control top-form" type="text" name="email" placeholder="Email Address"/>
+					<input id="phone" className="form-control bottom-form" type="text" name="phone" placeholder="Phone Number"/>
 	            </div>
 	            <div className="form-group">
-								<input id="pass" className="form-control" type="password" name="pass" placeholder="Password"/>
-								<input id="pass2" className="form-control" type="password" name="pass2" placeholder="Retype Password"/>
+					<input id="pass" className="form-control top-form" type="password" name="pass" placeholder="Password"/>
+					<input id="pass2" className="form-control bottom-form" type="password" name="pass2" placeholder="Retype Password"/>
 	            </div>
 	            <div className="form-group">
 	            	<input id="invite" className="form-control" type="text" name="invite" placeholder="Invite Code"/>
 	            </div>
 	            <div className="form-group">
-	              <div  className="offset-sm-2 col-sm-4">
-									<input type="hidden" name="_csrf" value={this.props.csrf} />
+	              <div  className="container">
+					<input type="hidden" name="_csrf" value={this.props.csrf} />
 	                <input className="formSubmit btn" type="submit" value="Sign Up Now!" />   
 	              </div>
 	            </div>

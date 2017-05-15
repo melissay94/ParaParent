@@ -11,6 +11,7 @@
     "watchWelcomeBundle": "babel --watch ./client/helper ./client/welcome --presets react --out-file ./hosted/welcomeBundle.js",
     "watchWorkerBundle": "babel --watch ./client/helper ./client/worker --presets react --out-file ./hosted/workerBundle.js",
 		"watchCustomerBundle": "babel --watch ./client/helper ./client/customer --presets react --out-file ./hosted/customerBundle.js",
+    "watch": "npm run watchWelcomeBundle",
     "nodemon": "nodemon --watch ./server ./server/app.js",
     "start": "node ./server/app.js",
     "pretest": "eslint ./server --fix",
