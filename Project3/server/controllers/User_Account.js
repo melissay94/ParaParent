@@ -1,7 +1,22 @@
-// Set up Worker account controller
+// Set up user account controller
 const models = require('../models');
 
-const WorkerAccount = models.WorkerAccount;
+const UserAccount = models.UserAccount;
+
+// Set up login and sign up components (Comp) render
+const loginComp = (req, res) => {
+  res.render('login', { csrfToken: req.csrfToken() });
+};
+
+const signupComp = (req, res) => {
+  res.render('welcome', { csrfToken: req.csrfToken() });
+};
+
+// Set up logout logic
+const logout = (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+};
 
 // Set up login logic
 const login = (request, response) => {
@@ -17,19 +32,18 @@ const login = (request, response) => {
     return res.status(400).json({ error: 'All fields needed to make sure its you' });
   }
 
-  return WorkerAccount.WorkerAccountModel.authenticate(email, password, (err, account) => {
+  return UserAccount.UserAccountModel.authenticate(email, password, (err, account) => {
     if (err || !account) {
-      console.log(email, ' ', password);
       return res.status(401).json({ error: 'No record of that email and password combination' });
     }
 
-    req.session.account = WorkerAccount.WorkerAccountModel.toAPI(account);
+    req.session.account = UserAccount.UserAccountModel.toAPI(account);
 
-    return res.json({ redirect: '/workerprofile' });
+    return res.json({ redirect: '/profile' });
   });
 };
 
-// Set up signup as a Worker logic
+// Set up signup as a user logic
 const signup = (request, response) => {
   // Reassigned passed in params
   const req = request;
@@ -58,7 +72,7 @@ const signup = (request, response) => {
 
     // Generate a new encrypted password hash and salt
     // They will be stored in the db and send a JSON response for success/failure
-  return WorkerAccount.WorkerAccountModel.generateHash(req.body.pass, (salt, hash) => {
+  return UserAccount.UserAccountModel.generateHash(req.body.pass, (salt, hash) => {
     const accountData = {
       firstname: req.body.first,
       lastname: req.body.last,
@@ -68,13 +82,13 @@ const signup = (request, response) => {
       password: hash,
     };
 
-    const newAccount = new WorkerAccount.WorkerAccountModel(accountData);
+    const newAccount = new UserAccount.UserAccountModel(accountData);
 
     const savePromise = newAccount.save();
 
     savePromise.then(() => {
-      req.session.account = WorkerAccount.WorkerAccountModel.toAPI(newAccount);
-      res.json({ redirect: '/workerprofile' });
+      req.session.account = UserAccount.UserAccountModel.toAPI(newAccount);
+      res.json({ redirect: '/profile' });
     });
 
     savePromise.catch((err) => {
@@ -101,6 +115,9 @@ const getToken = (request, response) => {
 };
 
 // Export all the functions
+module.exports.loginComp = loginComp;
+module.exports.signupComp = signupComp;
+module.exports.logout = logout;
 module.exports.login = login;
 module.exports.signup = signup;
 module.exports.getToken = getToken;

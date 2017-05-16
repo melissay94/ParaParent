@@ -3,31 +3,31 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-let WorkerAccountModel = {};
+let UserAccountModel = {};
 const iterations = 10000;
 const saltLength = 64;
 const keyLength = 64;
 
-const WorkerAccountSchema = new mongoose.Schema({
+const UserAccountSchema = new mongoose.Schema({
 
   firstname: {
     type: String,
     required: true,
     trim: true,
-    match: /^[A-Za-z]{1,25}$/,
+    match: /^[A-Za-z]{1,16}$/,
   },
   lastname: {
     type: String,
     required: true,
     trim: true,
-    match: /^[A-Za-z]{1,25}$/,
+    match: /^[A-Za-z]{1,16}/,
   },
   email: {
     type: String,
     required: true,
     trim: true,
     unique: true,
-    match: /^[A-Za-z0-9_\-.@]{1,254}$/,
+    match: /^[A-Za-z0-9_\-.]{1,16}$/,
   },
   phone: {
     type: String,
@@ -42,7 +42,7 @@ const WorkerAccountSchema = new mongoose.Schema({
   inviteCode: {
     type: String,
     trim: true,
-    match: /^[A-Za-z0-9_\-.]{1,8}$/,
+    match: /^[A-Za-z0-9_\-.]{1,16}$/,
   },
   salt: {
     type: Buffer,
@@ -65,7 +65,7 @@ const validatePassword = (doc, password, callback) => {
   });
 };
 
-WorkerAccountSchema.statics.toAPI = doc => ({
+UserAccountSchema.statics.toAPI = doc => ({
   firstname: doc.firstname,
   lastname: doc.lastname,
   email: doc.email,
@@ -73,22 +73,22 @@ WorkerAccountSchema.statics.toAPI = doc => ({
   _id: doc._id,
 });
 
-WorkerAccountSchema.statics.findByEmail = (email, callback) => {
+UserAccountSchema.statics.findByEmail = (email, callback) => {
   const search = {
     email,
   };
 
-  return WorkerAccountModel.findOne(search, callback);
+  return UserAccountModel.findOne(search, callback);
 };
 
-WorkerAccountSchema.statics.generateHash = (password, callback) => {
+UserAccountSchema.statics.generateHash = (password, callback) => {
   const salt = crypto.randomBytes(saltLength);
 
   crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
 };
 
-WorkerAccountSchema.statics.authenticate = (email, password, callback) =>
-WorkerAccountModel.findByEmail(email, (err, doc) => {
+UserAccountSchema.statics.authenticate = (email, password, callback) =>
+UserAccountModel.findByEmail(email, (err, doc) => {
   if (err) {
     return callback(err);
   }
@@ -106,7 +106,7 @@ WorkerAccountModel.findByEmail(email, (err, doc) => {
   });
 });
 
-WorkerAccountModel = mongoose.model('WorkerAccount', WorkerAccountSchema);
+UserAccountModel = mongoose.model('UserAccount', UserAccountSchema);
 
-module.exports.WorkerAccountModel = WorkerAccountModel;
-module.exports.WorkerAccountSchema = WorkerAccountSchema;
+module.exports.UserAccountModel = UserAccountModel;
+module.exports.UserAccountSchema = UserAccountSchema;

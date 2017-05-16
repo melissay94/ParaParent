@@ -13,6 +13,16 @@ const portalPage = (req, res) => {
   });
 };
 
+const workerPortalPage = (req, res) => {
+  CustomerJobs.CustomerJobsModel.findByOwner(req.session.account._id, (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured' });
+    }
+    return res.render('userprofile', { csrfToken: req.csrfToken() });
+  });
+};
+
 // Creates a new job request
 const makeRequest = (req, res) => {
   if (!req.body.service || !req.body.time || !req.body.address || !req.body.payment) {
@@ -54,11 +64,12 @@ const getJobs = (request, response) => {
       return res.status(400).json({ error: 'Something went wrong. Damnit Paul' });
     }
 
-    return res.json({ comics: docs });
+    return res.json({ jobs: docs });
   });
 };
 
 // Export functions
 module.exports.portalPage = portalPage;
+module.exports.workerPortalPage = workerPortalPage;
 module.exports.makeRequest = makeRequest;
 module.exports.getJobs = getJobs;

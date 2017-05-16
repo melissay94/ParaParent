@@ -184,7 +184,6 @@ var handleUserLogin = function handleUserLogin(e) {
 		handleError("All fields needed to make sure its you");
 		return false;
 	}
-	console.log($('#loginUserForm').serialize());
 
 	sendAjax('POST', $("#loginUserForm").attr("action"), $("#loginUserForm").serialize(), redirect);
 

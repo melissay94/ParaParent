@@ -62,7 +62,7 @@ body {
 	background-color: #6BB6D6;
 	padding-top: 30px;
 }
-.new-user .btn, #userPopup .btn {
+.new-user .btn, #userPopup .btn, #addJob .btn {
 	border-radius: 0px;
 	border: none;
 	background-color: dimgrey;
@@ -150,7 +150,40 @@ body {
 	color: #6BB6D6;
 	font-weight: bold;
 }
+
+/* User Profile*/
 #addJob {
 	background-color: #6BB6D6;
 	text-align: center;
+}
+#addJob .container-fluid {
+	width: 80%;
+}
+#addJob .row {
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+#addJob .col-md-10 {
+	margin: 10px;
+	background-color: #EBEBEB;
+}
+#addJob .col-sm-6 {
+	text-align: left;
+}
+#addJob button {
+	background: none;
+	border: none;
+	font-size: 24px;
+}
+#addJob button:hover {
+	color: #6BB6D6;
+}
+#addJob h3 {
+	color: #111;
+	font-weight: bold;
+	font-family: "Roboto", sans-serif;
+	font-size: 30px;
+}
+#addJob img {
+	width: 100px;
 }

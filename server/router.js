@@ -9,11 +9,14 @@ const router = (app) => {
   app.get('/signup', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.signupComp);
   app.get('/loginUser', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.loginComp);
   app.get('/logout', mid.requiresLogin, controllers.UserAccount.logout);
-	app.get('/userprofile', mid.requiresLogin, controllers.CustomerJobs.portalPage);
-	app.get('/getJobs', mid.requiresLogin, controllers.CustomerJobs.getJobs);
+  app.get('/userprofile', mid.requiresLogin, controllers.CustomerJobs.portalPage);
+  app.get('/workerprofile', mid.requiresLogin, controllers.CustomerJobs.workerPortalPage);
+  app.get('/getJobs', mid.requiresLogin, controllers.CustomerJobs.getJobs);
   app.post('/loginUser', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.login);
+  app.post('/loginWorker', mid.requiresSecure, mid.requiresLogout, controllers.WorkerAccount.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.signup);
-	app.post('/userprofile', mid.requiresLogin, controllers.CustomerJobs.makeRequest);
+  app.post('/apply', mid.requiresSecure, mid.requiresLogout, controllers.WorkerAccount.signup);
+  app.post('/userprofile', mid.requiresLogin, controllers.CustomerJobs.makeRequest);
 };
 
 // Export the router

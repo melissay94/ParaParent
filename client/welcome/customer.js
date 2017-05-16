@@ -51,8 +51,8 @@ const renderUserLogin = function() {
 				<div className="form-group">
 					<div  className="container">
 						<input type="hidden" name="_csrf" value={this.props.csrf} />
-		                <input className="formSubmit btn" type="submit" value="Login" />   
-		             </div>
+		        <input className="formSubmit btn" type="submit" value="Login" />   
+		       </div>
 				</div>
 			</form>
 		</div>

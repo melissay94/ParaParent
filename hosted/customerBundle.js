@@ -36,26 +36,6 @@ $(document).ready(function () {
 });
 "use strict";
 
-var jobListRenderer = void 0;
-var jobForm = void 0;
-var JobListClass = void 0;
-var JobFormClass = void 0;
-
-// Handles "sending" a job
-var handleJobs = function handleJobs(e) {
-	e.preventDefault();
-
-	// Where the check will go once I have a check
-
-	sendAjax('POST', $("#jobSumbit").attr("action"), $("#jobSubmit").serialize(), function () {
-		jobListRenderer.loadJobsFromServer();
-	});
-
-	handleError("Your job has been submitted");
-
-	return false;
-};
-
 // Renders the navigation bar
 var renderNavBar = function renderNavBar() {
 	return React.createElement(
@@ -78,10 +58,10 @@ var renderNavBar = function renderNavBar() {
 				{ className: "nav navbar-nav" },
 				React.createElement(
 					"li",
-					{ className: "userLink" },
+					{ className: "userLink", id: "#useraccount" },
 					React.createElement(
 						"a",
-						{ href: "/useraccount" },
+						{ href: "#" },
 						"Account"
 					)
 				),
@@ -99,15 +79,405 @@ var renderNavBar = function renderNavBar() {
 	);
 };
 
-// Renders the jobs form for submitting a new request
-var renderJobForm = function renderJobForm() {
+// Renders the content
+var renderUserService = function renderUserService() {
 	return React.createElement(
 		"div",
 		null,
+		React.createElement("div", { id: "addJob" }),
+		React.createElement("div", { id: "jobs" })
+	);
+};
+
+var setup = function setup(csrf) {
+
+	// Set up the navbar
+	var NavBarComp = React.createClass({
+		displayName: "NavBarComp",
+
+		render: renderNavBar
+	});
+
+	var ContentComp = React.createClass({
+		displayName: "ContentComp",
+
+		render: renderUserService
+	});
+
+	var OptionsWindow = React.createClass({
+		displayName: "OptionsWindow",
+
+		handleSubmit: handleChange,
+		render: renderChangePass
+	});
+
+	ReactDOM.render(React.createElement(NavBarComp, null), document.querySelector("#navigation"));
+
+	var JobFormModal = React.createClass({
+		displayName: "JobFormModal",
+
+		handleSubmit: handleJobs,
+		render: renderJobForm
+	});
+
+	ReactDOM.render(React.createElement(ContentComp, null), document.querySelector("#userContent"));
+
+	// Set up submission form
+	JobFormClass = React.createClass({
+		displayName: "JobFormClass",
+
+		render: renderJobSelect
+	});
+
+	// Set up list of past and pending jobs
+	JobListClass = React.createClass({
+		displayName: "JobListClass",
+
+		loadJobsFromServer: function loadJobsFromServer() {
+			sendAjax('GET', '/getJobs', null, function (data) {
+				this.setState({ data: data.jobs });
+			}.bind(this));
+		},
+		getInitialState: function getInitialState() {
+			return { data: [] };
+		},
+		componentDidMount: function componentDidMount() {
+			this.loadJobsFromServer();
+		},
+		render: renderJobList
+	});
+
+	jobForm = ReactDOM.render(React.createElement(JobFormClass, null), document.querySelector('#addJob'));
+
+	// Hook up all the plus buttons
+	var deliveryButton = document.querySelector("#addDelivery");
+	var cleanButton = document.querySelector("#addClean");
+	var ridesButton = document.querySelector("#addRides");
+	var errandsButton = document.querySelector("#addErrands");
+	var sumbitButton = document.querySelector("#startForm");
+	var accountButton = document.querySelector("#useraccount");
+
+	deliveryButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Delivery");
+		return false;
+	});
+	cleanButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Clean");
+		return false;
+	});
+	ridesButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Rides");
+		return false;
+	});
+	errandsButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Errands");
+		return false;
+	});
+	startForm.addEventListener("click", function (e) {
+		e.preventDefault();
+		ReactDOM.render(React.createElement(JobFormModal, { csrf: csrf }), document.querySelector("#serviceModal"));
+		return false;
+	});
+	accountButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		ReactDOM.render(React.createElement(OptionsWindow, { csrf: csrf }), document.querySelector("#userContent"));
+		return false;
+	});
+
+	jobListRenderer = ReactDOM.render(React.createElement(JobListClass, { csrf: csrf }), document.querySelector('#jobs'));
+};
+"use strict";
+
+var jobListRenderer = void 0;
+var jobForm = void 0;
+var JobListClass = void 0;
+var JobFormClass = void 0;
+var jobListAdd = "";
+
+// Handles "sending" a job
+var handleJobs = function handleJobs(e) {
+	e.preventDefault();
+
+	if ($("#service").val() == '' || $("#time").val() == '' || $("#address").val() == '' || $("#payment").val() == '') {
+		handleError("All fields required");
+		return false;
+	}
+
+	sendAjax('POST', $("#jobSumbit").attr("action"), $("#jobSubmit").serialize(), function () {
+		jobListRenderer.loadJobsFromServer();
+	});
+
+	handleError("Your job has been submitted");
+
+	return false;
+};
+
+var handleJobSelect = function handleJobSelect(jobType) {
+
+	var name = "#add" + jobType;
+
+	if (jobListAdd.indexOf(jobType) < 0) {
+		jobListAdd += jobType + " ";
+		document.querySelector(name).style = "color: lightgreen;";
+	} else {
+		console.log("hi ", jobListAdd.indexOf(jobType));
+		jobListAdd.replace(jobType, "");
+		document.querySelector(name).style = "color: black;";
+	}
+
+	console.log(jobListAdd);
+};
+
+// Renders the options grid to lead to the modal form
+var renderJobSelect = function renderJobSelect() {
+	return React.createElement(
+		"div",
+		{ className: "container-fluid" },
 		React.createElement(
-			"h3",
-			null,
-			"Pick a Service"
+			"div",
+			{ className: "row" },
+			React.createElement(
+				"div",
+				{ className: "col-md-6" },
+				React.createElement(
+					"div",
+					{ className: "col-md-10" },
+					React.createElement(
+						"div",
+						{ className: "row" },
+						React.createElement(
+							"div",
+							{ className: "col-sm-4" },
+							React.createElement("img", { src: "assets/img/DeliveryIcon.png" })
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-6" },
+							React.createElement(
+								"h3",
+								null,
+								"Delivery"
+							)
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-2" },
+							React.createElement(
+								"button",
+								{ id: "addDelivery" },
+								React.createElement("span", { className: "glyphicon glyphicon-plus" })
+							)
+						)
+					)
+				)
+			),
+			React.createElement(
+				"div",
+				{ className: "col-md-6" },
+				React.createElement(
+					"div",
+					{ className: "col-md-10" },
+					React.createElement(
+						"div",
+						{ className: "row" },
+						React.createElement(
+							"div",
+							{ className: "col-sm-4" },
+							React.createElement("img", { src: "assets/img/CleanIcon.png" })
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-6" },
+							React.createElement(
+								"h3",
+								null,
+								"Tidy Up"
+							)
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-2" },
+							React.createElement(
+								"button",
+								{ id: "addClean" },
+								React.createElement("span", { className: "glyphicon glyphicon-plus" })
+							)
+						)
+					)
+				)
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "row" },
+			React.createElement(
+				"div",
+				{ className: "col-md-6" },
+				React.createElement(
+					"div",
+					{ className: "col-md-10" },
+					React.createElement(
+						"div",
+						{ className: "row" },
+						React.createElement(
+							"div",
+							{ className: "col-sm-4" },
+							React.createElement("img", { src: "assets/img/RideIcon.png" })
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-6" },
+							React.createElement(
+								"h3",
+								null,
+								"Rides"
+							)
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-2" },
+							React.createElement(
+								"button",
+								{ id: "addRides" },
+								React.createElement("span", { className: "glyphicon glyphicon-plus" })
+							)
+						)
+					)
+				)
+			),
+			React.createElement(
+				"div",
+				{ className: "col-md-6" },
+				React.createElement(
+					"div",
+					{ className: "col-md-10" },
+					React.createElement(
+						"div",
+						{ className: "row" },
+						React.createElement(
+							"div",
+							{ className: "col-sm-4" },
+							React.createElement("img", { src: "assets/img/ErrandIcon.png" })
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-6" },
+							React.createElement(
+								"h3",
+								null,
+								"Errands"
+							)
+						),
+						React.createElement(
+							"div",
+							{ className: "col-sm-2" },
+							React.createElement(
+								"button",
+								{ id: "addErrands" },
+								React.createElement("span", { className: "glyphicon glyphicon-plus" })
+							)
+						)
+					)
+				)
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "row" },
+			React.createElement(
+				"a",
+				{ className: "btn", href: "#serviceModal", id: "startForm", "data-toggle": "modal" },
+				"Submit"
+			)
+		)
+	);
+};
+
+// Set up the login modal
+var renderJobForm = function renderJobForm() {
+	return React.createElement(
+		"div",
+		{ className: "modal-dialog" },
+		React.createElement(
+			"div",
+			{ className: "modal-content" },
+			React.createElement(
+				"div",
+				{ className: "modal-header" },
+				React.createElement(
+					"h3",
+					null,
+					"Submit Service Request"
+				)
+			),
+			React.createElement(
+				"div",
+				{ className: "modal-body" },
+				React.createElement(
+					"form",
+					{ id: "jobSubmit", name: "jobSumbit",
+						onSubmit: this.handleSubmit,
+						action: "userprofile",
+						method: "POST",
+						className: "jobForm"
+					},
+					React.createElement(
+						"div",
+						{ className: "form-group" },
+						React.createElement(
+							"label",
+							{ htmlFor: "service" },
+							"Services Selected: "
+						),
+						React.createElement("input", { id: "jobService", className: "form-control", type: "text", name: "service", value: jobListAdd, readOnly: true })
+					),
+					React.createElement(
+						"div",
+						{ className: "form-group" },
+						React.createElement(
+							"label",
+							{ htmlFor: "time" },
+							"Fill out a Time: "
+						),
+						React.createElement("input", { className: "form-control", type: "text", name: "payment", placeholder: "Enter card number" })
+					),
+					React.createElement(
+						"div",
+						{ className: "form-group" },
+						React.createElement(
+							"label",
+							{ htmlFor: "address" },
+							"Fill out Address: "
+						),
+						React.createElement("input", { id: "jobAddress", className: "form-control", type: "text", name: "address", placeholder: "Enter address" })
+					),
+					React.createElement(
+						"div",
+						{ className: "form-group" },
+						React.createElement(
+							"label",
+							{ htmlFor: "payment" },
+							"Fill out payment option: "
+						),
+						React.createElement("input", { className: "form-control", type: "text", name: "payment", placeholder: "Enter card number" })
+					),
+					React.createElement(
+						"div",
+						{ className: "form-group" },
+						React.createElement(
+							"div",
+							{ className: "container" },
+							React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
+							React.createElement("input", { className: "formSubmit btn", type: "submit", value: "Sumbit Request" })
+						)
+					)
+				),
+				React.createElement("div", { className: "errorMessage" })
+			)
 		)
 	);
 };
@@ -144,45 +514,90 @@ var renderJobList = function renderJobList() {
 		jobNodes
 	);
 };
+"use strict";
 
-var setup = function setup(csrf) {
+// Handles the request to change password
+var handleChange = function handleChange(e) {
+	e.preventDefault();
 
-	// Set up the navbar
-	var NavBarComp = React.createClass({
-		displayName: "NavBarComp",
+	if ($("#user").val() == '' || $("#old_pass") == '' || $("new_pass") == '') {
+		handleError("Excuse me, I'mma need all that info");
+		return false;
+	}
 
-		render: renderNavBar
-	});
+	sendAjax('POST', $('#changeForm').attr("action"), $("#changeForm").serialize());
 
-	ReactDOM.render(React.createElement(NavBarComp, null), document.querySelector("#navigation"));
+	// Reset all the fields
+	document.querySelector("#user").value = "";
+	document.querySelector("#old_pass").value = "";
+	document.querySelector("#new_pass").value = "";
 
-	// Set up submission form
-	JobFormClass = React.createClass({
-		displayName: "JobFormClass",
+	// Using handleError to let them know it succeeded
+	handleError("Password has been changed");
 
-		render: renderJobForm
-	});
+	return false;
+};
 
-	// Set up list of past and pending jobs
-	JobListClass = React.createClass({
-		displayName: "JobListClass",
-
-		loadJobsFromServer: function loadJobsFromServer() {
-			sendAjax('GET', '/getJobs', null, function (data) {
-				this.setState({ data: data.jobs });
-				console.log(data);
-			}.bind(this));
-		},
-		getInitialState: function getInitialState() {
-			return { data: [] };
-		},
-		componentDidMount: function componentDidMount() {
-			this.loadJobsFromServer();
-		},
-		render: renderJobList
-	});
-
-	jobForm = ReactDOM.render(React.createElement(JobFormClass, { csrf: csrf }), document.querySelector('#addJob'));
-
-	jobListRenderer = ReactDOM.render(React.createElement(JobListClass, { csrf: csrf }), document.querySelector('#jobs'));
+// Set up form
+var renderChangePass = function renderChangePass() {
+	return React.createElement(
+		"form",
+		{ id: "changeForm", name: "changeForm",
+			onSubmit: this.handleSubmit,
+			action: "/options",
+			method: "POST",
+			className: "changeForm" },
+		React.createElement(
+			"div",
+			{ className: "form-group row" },
+			React.createElement(
+				"label",
+				{ htmlFor: "username", className: "col-md-2 col-form-label" },
+				"Username: "
+			),
+			React.createElement(
+				"div",
+				{ className: "col-md-10" },
+				React.createElement("input", { id: "user", className: "form-control", type: "text", name: "username", placeholder: "Username" })
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "form-group row" },
+			React.createElement(
+				"label",
+				{ htmlFor: "old_pass", className: "col-md-2 col-form-label" },
+				"Current Password: "
+			),
+			React.createElement(
+				"div",
+				{ className: "col-md-10" },
+				React.createElement("input", { id: "old_pass", className: "form-control", type: "password", name: "old_pass", placeholder: "Current Password" })
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "form-group row" },
+			React.createElement(
+				"label",
+				{ htmlFor: "new_pass", className: "col-md-2 col-form-label" },
+				"New Password: "
+			),
+			React.createElement(
+				"div",
+				{ className: "col-md-10" },
+				React.createElement("input", { id: "new_pass", className: "form-control", type: "password", name: "new_pass", placeholder: "New Password" })
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "form-group row" },
+			React.createElement(
+				"div",
+				{ className: "offset-md-10 col-md-10" },
+				React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
+				React.createElement("input", { className: "formSubmit btn", type: "submit", value: "Reset Password" })
+			)
+		)
+	);
 };

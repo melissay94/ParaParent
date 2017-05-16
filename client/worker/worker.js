@@ -17,16 +17,6 @@ const renderNavBar = function() {
 	);
 };
 
-// Renders the content
-const renderUserService = function() {
-	return (
-		<div>
-			<div id="addJob"></div>
-			<div id="jobs"></div>
-		</div>
-	);
-};
-
 const setup = function(csrf) {
 	
 	// Set up the navbar
@@ -47,21 +37,11 @@ const setup = function(csrf) {
 		<NavBarComp />,
 		document.querySelector("#navigation")
 	);
-	
-	const JobFormModal = React.createClass({
-		handleSubmit: handleJobs,
-		render: renderJobForm,
-	});
-	
+
 	ReactDOM.render(
 		<ContentComp />,
 		document.querySelector("#userContent")
 	);
-	
-	// Set up submission form
-	JobFormClass = React.createClass({
-			render: renderJobSelect,
-	});
 	
 	// Set up list of past and pending jobs
 	JobListClass = React.createClass({
@@ -79,52 +59,19 @@ const setup = function(csrf) {
 		render: renderJobList
 	});
 	
-	jobForm = ReactDOM.render(
-		<JobFormClass />, 
-		document.querySelector('#addJob')
-	);
-	
 	// Hook up all the plus buttons
-	const deliveryButton = document.querySelector("#addDelivery");
-	const cleanButton = document.querySelector("#addClean");
-	const ridesButton = document.querySelector("#addRides");
-	const errandsButton = document.querySelector("#addErrands");
-	const sumbitButton = document.querySelector("#startForm");
+	const acceptButton = document.querySelector("#takeJob");
 	const accountButton = document.querySelector("#useraccount");
 	
-	deliveryButton.addEventListener("click", (e) => {
+	acceptButton.addEventListener("click", (e) => {
 		e.preventDefault();
-		handleJobSelect("Delivery");
-		return false;
-	});
-	cleanButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Clean");
-		return false;
-	});
-	ridesButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Rides");
-		return false;
-	});
-	errandsButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Errands");
-		return false;
-	})
-	startForm.addEventListener("click", (e) => {
-		e.preventDefault();
-		ReactDOM.render(
-			<JobFormModal csrf={csrf} />,
-			document.querySelector("#serviceModal")
-		);
 		return false;
 	});
 	accountButton.addEventListener("click", (e) => {
 		e.preventDefault();
 		ReactDOM.render(
 			<OptionsWindow csrf={csrf} />,
-			document.querySelector("#userContent")
+			document.querySelector("#workerContent")
 		);
 		return false;
 	})

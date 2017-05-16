@@ -34,7 +34,7 @@ const login = (request, response) => {
 
   return UserAccount.UserAccountModel.authenticate(email, password, (err, account) => {
     if (err || !account) {
-			console.log(email, " ", password);
+      console.log(email, ' ', password);
       return res.status(401).json({ error: 'No record of that email and password combination' });
     }
 
