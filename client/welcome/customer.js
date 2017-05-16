@@ -6,7 +6,7 @@ const handleUserLogin = (e) => {
 		handleError("All fields needed to make sure its you");
 		return false;
 	}
-
+	
 	sendAjax('POST', $("#loginUserForm").attr("action"), $("#loginUserForm").serialize(), redirect);
 
 	return false;
@@ -43,13 +43,13 @@ const renderUserLogin = function() {
 				onSubmit={this.handleSubmit}
 				action="/loginUser"
 				method="POST"
-				className="mainForm">
+				className="loginForm">
 				<div className="form-group">
-					<input id="email" className="form-control" type="text" placeholder="Email Address" />
-					<input id="pass" className="form-control" type="password" placeholder="Password" />
+					<input id="email" className="form-control top-form" type="text" name="email" placeholder="Email Address" />
+					<input id="pass" className="form-control bottom-form" type="password" name="pass" placeholder="Password" />
 				</div>
 				<div className="form-group">
-					<div  className="offset-sm-2 col-sm-4">
+					<div  className="container">
 						<input type="hidden" name="_csrf" value={this.props.csrf} />
 		                <input className="formSubmit btn" type="submit" value="Login" />   
 		             </div>

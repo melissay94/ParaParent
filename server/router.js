@@ -7,10 +7,13 @@ const router = (app) => {
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.signupComp);
   app.get('/getToken', mid.requiresSecure, controllers.UserAccount.getToken);
   app.get('/signup', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.signupComp);
-  app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.loginComp);
+  app.get('/loginUser', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.loginComp);
   app.get('/logout', mid.requiresLogin, controllers.UserAccount.logout);
-  app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.login);
+	app.get('/userprofile', mid.requiresLogin, controllers.CustomerJobs.portalPage);
+	app.get('/getJobs', mid.requiresLogin, controllers.CustomerJobs.getJobs);
+  app.post('/loginUser', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.UserAccount.signup);
+	app.post('/userprofile', mid.requiresLogin, controllers.CustomerJobs.makeRequest);
 };
 
 // Export the router

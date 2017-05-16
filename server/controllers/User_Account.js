@@ -34,12 +34,13 @@ const login = (request, response) => {
 
   return UserAccount.UserAccountModel.authenticate(email, password, (err, account) => {
     if (err || !account) {
+			console.log(email, " ", password);
       return res.status(401).json({ error: 'No record of that email and password combination' });
     }
 
     req.session.account = UserAccount.UserAccountModel.toAPI(account);
 
-    return res.json({ redirect: '/profile' });
+    return res.json({ redirect: '/userprofile' });
   });
 };
 
@@ -88,7 +89,7 @@ const signup = (request, response) => {
 
     savePromise.then(() => {
       req.session.account = UserAccount.UserAccountModel.toAPI(newAccount);
-      res.json({ redirect: '/profile' });
+      res.json({ redirect: '/userprofile' });
     });
 
     savePromise.catch((err) => {

@@ -1,13 +1,13 @@
 
 body {
 	background-color: #EBEBEB;
+	padding-right: 0px;
 }
-
 .navbar-default {
 	background-color: #EBEBEB;
 	margin-bottom: 0px;
+	border: none;
 }
-
 .navbar-default .navbar-header {
 	width: 12%;
 }
@@ -20,9 +20,29 @@ body {
 }
 .navbar-nav {
 	width: 88%;
+	display: inline-block;
 }
 .navbar-default li{
 	padding-top: 10px;
+}
+#loginLi {
+	float: right; 
+	margin-right: -205px;
+}
+#loginLi a {
+	font-weight: bold;
+}
+.modal-header {
+	background: #6BB6D6;
+	border-top-left-radius: 0.25em;
+	border-top-right-radius: 0.25em;
+}
+.modal-header ul {
+	width: 100%;
+	height: 50px;
+}
+.modal-body h3 {
+	padding-bottom: 15px;
 }
 .tagline {
 	padding: 0px;
@@ -34,7 +54,6 @@ body {
 #banner {
 	width:100%;
 }
-
 .new-user {
 	position: absolute;
 	min-height: 880px;
@@ -43,8 +62,7 @@ body {
 	background-color: #6BB6D6;
 	padding-top: 30px;
 }
-
-.new-user .btn {
+.new-user .btn, #userPopup .btn {
 	border-radius: 0px;
 	border: none;
 	background-color: dimgrey;
@@ -61,39 +79,39 @@ body {
 	background-color: #EBEBEB;
 	color: #111;
 }
-
 .top-form {
     border-bottom-right-radius: 0em;
     border-bottom-left-radius: 0em;
     border-bottom: none;
 }
-
 .bottom-form {
 	border-top-right-radius: 0em;
 	border-top-left-radius: 0em;
 	margin-bottom: 50px;
 }
-
 .form-nav {
 	font-size: 18px;
 	color: dimgrey;
 	margin-bottom: 50px;
 	font-weight: bold;
 }
-
 .form-nav:focus {
 	border-bottom: 2px dimgrey solid;
 	background-color: none;
 }
-
 .form-nav:hover {
 	background: pink;
 }
-
 #signupUserForm .btn {
 	margin-top: 100px; 
 }
-
+.errorMessage {
+	text-align: center;
+	color:dimgray;
+	padding-top: 15px;
+	font-size: 18px;
+	font-weight: bold;
+}
 .services h3, .jumbotron h3 {
 	color:#111;
 	text-align: center;
@@ -103,38 +121,36 @@ body {
 .serviceIcon:hover {
 	background-color: lightgrey;
 }
-
 .serviceIcon:focus {
 	border-bottom: 2px dimgrey solid;
 }
-
 .serviceIcon img {
 	display: block;
 	margin: 0 auto;
 	max-width: 100px;
 }
-
 .serviceIcon h3 {
 	color: #111;
 	text-align: center;
 	font-size: 18px;
 }
-
 #serviceExplained .jumbotron {
 	background-color: #EBEBEB;
 	text-align: center;
 	padding-top: 50px;
 	min-height: 400px;
 }
-
 .jumbotron {
 	background-color: #6BB6D6;
 	text-align: center;
 	padding-top: 50px;
 	min-height: 600px;
 }
-
 #serviceExplained p {
 	color: #6BB6D6;
 	font-weight: bold;
+}
+#addJob {
+	background-color: #6BB6D6;
+	text-align: center;
 }

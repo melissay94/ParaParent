@@ -89,15 +89,15 @@ var renderWorkerLogin = function renderWorkerLogin() {
 			React.createElement(
 				'div',
 				{ className: 'form-group' },
-				React.createElement('input', { id: 'email', className: 'form-control', type: 'text', placeholder: 'Email Address' }),
-				React.createElement('input', { id: 'pass', className: 'form-control', type: 'password', placeholder: 'Password' })
+				React.createElement('input', { id: 'email', className: 'form-control top-form', type: 'text', name: 'email', placeholder: 'Email Address' }),
+				React.createElement('input', { id: 'pass', className: 'form-control bottom-form', type: 'password', name: 'pass', placeholder: 'Password' })
 			),
 			React.createElement(
 				'div',
 				{ className: 'form-group' },
 				React.createElement(
 					'div',
-					{ className: 'offset-sm-2 col-sm-4' },
+					{ className: 'container' },
 					React.createElement('input', { type: 'hidden', name: '_csrf', value: this.props.csrf }),
 					React.createElement('input', { className: 'formSubmit btn', type: 'submit', value: 'Login' })
 				)
@@ -184,6 +184,7 @@ var handleUserLogin = function handleUserLogin(e) {
 		handleError("All fields needed to make sure its you");
 		return false;
 	}
+	console.log($('#loginUserForm').serialize());
 
 	sendAjax('POST', $("#loginUserForm").attr("action"), $("#loginUserForm").serialize(), redirect);
 
@@ -225,19 +226,19 @@ var renderUserLogin = function renderUserLogin() {
 				onSubmit: this.handleSubmit,
 				action: '/loginUser',
 				method: 'POST',
-				className: 'mainForm' },
+				className: 'loginForm' },
 			React.createElement(
 				'div',
 				{ className: 'form-group' },
-				React.createElement('input', { id: 'email', className: 'form-control', type: 'text', placeholder: 'Email Address' }),
-				React.createElement('input', { id: 'pass', className: 'form-control', type: 'password', placeholder: 'Password' })
+				React.createElement('input', { id: 'email', className: 'form-control top-form', type: 'text', name: 'email', placeholder: 'Email Address' }),
+				React.createElement('input', { id: 'pass', className: 'form-control bottom-form', type: 'password', name: 'pass', placeholder: 'Password' })
 			),
 			React.createElement(
 				'div',
 				{ className: 'form-group' },
 				React.createElement(
 					'div',
-					{ className: 'offset-sm-2 col-sm-4' },
+					{ className: 'container' },
 					React.createElement('input', { type: 'hidden', name: '_csrf', value: this.props.csrf }),
 					React.createElement('input', { className: 'formSubmit btn', type: 'submit', value: 'Login' })
 				)
@@ -319,6 +320,210 @@ var createLoginUserComp = function createLoginUserComp(csrf) {
 	});
 
 	ReactDOM.render(React.createElement(LoginComp, { csrf: csrf }), document.querySelector("#userPopup"));
+};
+"use strict";
+
+// Set up the nav bar 
+var renderNavBar = function renderNavBar() {
+	return React.createElement(
+		"div",
+		{ className: "container" },
+		React.createElement(
+			"div",
+			{ className: "navbar-header" },
+			React.createElement(
+				"h3",
+				{ href: "#", className: "navbar-brand" },
+				"ParaParent"
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "collapse navbar-collapse" },
+			React.createElement(
+				"ul",
+				{ className: "nav navbar-nav" },
+				React.createElement(
+					"li",
+					null,
+					React.createElement(
+						"a",
+						{ href: "#userServices" },
+						"Our Services"
+					)
+				),
+				React.createElement(
+					"li",
+					null,
+					React.createElement(
+						"a",
+						{ href: "#whyUs" },
+						"Why Us"
+					)
+				),
+				React.createElement(
+					"li",
+					{ id: "loginLi" },
+					React.createElement(
+						"a",
+						{ href: "#loginModal", className: "btn", id: "login", "data-toggle": "modal" },
+						"Login"
+					)
+				)
+			)
+		)
+	);
+};
+
+// Set up the login modal
+var renderLoginModal = function renderLoginModal() {
+	return React.createElement(
+		"div",
+		{ className: "modal-dialog" },
+		React.createElement(
+			"div",
+			{ className: "modal-content" },
+			React.createElement(
+				"div",
+				{ className: "modal-header" },
+				React.createElement(
+					"ul",
+					{ className: "nav row" },
+					React.createElement(
+						"li",
+						{ className: "nav-item col-sm-6" },
+						React.createElement(
+							"a",
+							{ className: "nav-link form-nav", id: "userLoginButton", href: "/signup" },
+							"Customer"
+						)
+					),
+					React.createElement(
+						"li",
+						{ className: "nav-item col-sm-6" },
+						React.createElement(
+							"a",
+							{ className: "nav-link form-nav", id: "wokerLoginButton", href: "/apply" },
+							"Worker"
+						)
+					)
+				)
+			),
+			React.createElement(
+				"div",
+				{ className: "modal-body" },
+				React.createElement("div", { id: "userPopup" }),
+				React.createElement("div", { className: "errorMessage" })
+			)
+		)
+	);
+};
+
+// Set up the main form base
+var renderMainForm = function renderMainForm() {
+	return React.createElement(
+		"div",
+		null,
+		React.createElement(
+			"div",
+			{ className: "container-fluid" },
+			React.createElement(
+				"ul",
+				{ className: "nav row" },
+				React.createElement(
+					"li",
+					{ className: "nav-item col-sm-6" },
+					React.createElement(
+						"a",
+						{ className: "nav-link form-nav", id: "signupButton", href: "/signup" },
+						"Sign Up"
+					)
+				),
+				React.createElement(
+					"li",
+					{ className: "nav-item col-sm-6" },
+					React.createElement(
+						"a",
+						{ className: "nav-link form-nav", id: "applyButton", href: "/apply" },
+						"Apply to Us"
+					)
+				)
+			)
+		),
+		React.createElement("div", { id: "userInfo", className: "container" }),
+		React.createElement("div", { className: "errorMessage" })
+	);
+};
+
+// Set up all the buttons for the page and all the components
+var setup = function setup(csrf) {
+
+	// Set up the navbar
+	var NavBarComp = React.createClass({
+		displayName: "NavBarComp",
+
+		render: renderNavBar
+	});
+
+	ReactDOM.render(React.createElement(NavBarComp, null), document.querySelector("#navigation"));
+
+	// Set up the modal 
+	var LoginModalComp = React.createClass({
+		displayName: "LoginModalComp",
+
+		render: renderLoginModal
+	});
+
+	ReactDOM.render(React.createElement(LoginModalComp, null), document.querySelector("#loginModal"));
+
+	// Set up the base form
+	var MainFormComp = React.createClass({
+		displayName: "MainFormComp",
+
+		render: renderMainForm
+	});
+
+	ReactDOM.render(React.createElement(MainFormComp, null), document.querySelector("#mainForm"));
+
+	var applyButton = document.querySelector("#applyButton");
+	var signupButton = document.querySelector("#signupButton");
+	var login = document.querySelector("#login");
+	var loginCustomer = document.querySelector("#userLoginButton");
+	var loginWorker = document.querySelector("#wokerLoginButton");
+
+	applyButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		createApplicationComp(csrf);
+		return false;
+	});
+
+	signupButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		createSignupComp(csrf);
+		return false;
+	});
+
+	login.addEventListener("click", function (e) {
+		e.preventDefault();
+		createLoginUserComp(csrf);
+		return false;
+	});
+
+	loginCustomer.addEventListener("click", function (e) {
+		e.preventDefault();
+		createLoginUserComp(csrf);
+		return false;
+	});
+
+	loginWorker.addEventListener("click", function (e) {
+		e.preventDefault();
+		createLoginWorkerComp(csrf);
+		return false;
+	});
+
+	createSignupComp(csrf);
+	createServicesComp(csrf);
+	checkSelected();
 };
 "use strict";
 
@@ -447,54 +652,54 @@ var renderErrandsSection = function renderErrandsSection() {
 	);
 };
 
-var createServicesComp = function createServicesComp(csrf) {
+var createServicesComp = function createServicesComp() {
 	var ServicesComp = React.createClass({
 		displayName: "ServicesComp",
 
 		render: renderServicesBar
 	});
 
-	ReactDOM.render(React.createElement(ServicesComp, { csrf: csrf }), document.querySelector("#userServices"));
+	ReactDOM.render(React.createElement(ServicesComp, null), document.querySelector("#userServices"));
 };
 
-var createDeliveryComp = function createDeliveryComp(csrf) {
+var createDeliveryComp = function createDeliveryComp() {
 	var DeliveryComp = React.createClass({
 		displayName: "DeliveryComp",
 
 		render: renderDeliverySection
 	});
 
-	ReactDOM.render(React.createElement(DeliveryComp, { csrf: csrf }), document.querySelector("#serviceExplained"));
+	ReactDOM.render(React.createElement(DeliveryComp, null), document.querySelector("#serviceExplained"));
 };
 
-var createCleanUpComp = function createCleanUpComp(csrf) {
+var createCleanUpComp = function createCleanUpComp() {
 	var CleanUpComp = React.createClass({
 		displayName: "CleanUpComp",
 
 		render: renderCleanSection
 	});
 
-	ReactDOM.render(React.createElement(CleanUpComp, { csrf: csrf }), document.querySelector("#serviceExplained"));
+	ReactDOM.render(React.createElement(CleanUpComp, null), document.querySelector("#serviceExplained"));
 };
 
-var createRidesComp = function createRidesComp(csrf) {
+var createRidesComp = function createRidesComp() {
 	var RidesComp = React.createClass({
 		displayName: "RidesComp",
 
 		render: renderRidesSection
 	});
 
-	ReactDOM.render(React.createElement(RidesComp, { csrf: csrf }), document.querySelector("#serviceExplained"));
+	ReactDOM.render(React.createElement(RidesComp, null), document.querySelector("#serviceExplained"));
 };
 
-var createErrandsComp = function createErrandsComp(csrf) {
+var createErrandsComp = function createErrandsComp() {
 	var ErrandsComp = React.createClass({
 		displayName: "ErrandsComp",
 
 		render: renderErrandsSection
 	});
 
-	ReactDOM.render(React.createElement(ErrandsComp, { csrf: csrf }), document.querySelector("#serviceExplained"));
+	ReactDOM.render(React.createElement(ErrandsComp, null), document.querySelector("#serviceExplained"));
 };
 
 var checkSelected = function checkSelected(csrf) {
@@ -505,69 +710,27 @@ var checkSelected = function checkSelected(csrf) {
 
 	deliveryButton.addEventListener("click", function (e) {
 		e.preventDefault();
-		createDeliveryComp(csrf);
+		createDeliveryComp();
 		return false;
 	});
 
 	cleanupButton.addEventListener("click", function (e) {
 		e.preventDefault();
-		createCleanUpComp(csrf);
+		createCleanUpComp();
 		return false;
 	});
 
 	ridesButton.addEventListener("click", function (e) {
 		e.preventDefault();
-		createRidesComp(csrf);
+		createRidesComp();
 		return false;
 	});
 
 	errandsButton.addEventListener("click", function (e) {
 		e.preventDefault();
-		createErrandsComp(csrf);
+		createErrandsComp();
 		return false;
 	});
 
-	createDeliveryComp(csrf);
-};
-
-var setup = function setup(csrf) {
-	var applyButton = document.querySelector("#applyButton");
-	var signupButton = document.querySelector("#signupButton");
-	var login = document.querySelector("#login");
-	var loginCustomer = document.querySelector("#userLoginButton");
-	var loginWorker = document.querySelector("#wokerLoginButton");
-
-	applyButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		createApplicationComp(csrf);
-		return false;
-	});
-
-	signupButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		createSignupComp(csrf);
-		return false;
-	});
-
-	login.addEventListener("click", function (e) {
-		e.preventDefault();
-		createLoginUserComp(csrf);
-		return false;
-	});
-
-	loginCustomer.addEventListener("click", function (e) {
-		e.preventDefault();
-		createLoginUserComp(csrf);
-		return false;
-	});
-
-	loginWorker.addEventListener("click", function (e) {
-		e.preventDefault();
-		createLoginWorkerComp(csrf);
-		return false;
-	});
-
-	createSignupComp(csrf);
-	createServicesComp(csrf);
-	checkSelected(csrf);
+	createDeliveryComp();
 };

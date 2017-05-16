@@ -4,7 +4,7 @@ const CustomerJobs = models.CustomerJobs;
 
 // Renders the page for services and past services listed
 const portalPage = (req, res) => {
-  CustomerJobs.findByOwner(req.session.account._id, (err, docs) => {
+  CustomerJobs.CustomerJobsModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occured' });

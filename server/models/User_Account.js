@@ -14,20 +14,20 @@ const UserAccountSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    match: /^[A-Za-z]{1,16}$/,
+    match: /^[A-Za-z]{1,25}$/,
   },
   lastname: {
     type: String,
     required: true,
     trim: true,
-    match: /^[A-Za-z]{1,16}/,
+    match: /^[A-Za-z]{1,25}$/,
   },
   email: {
     type: String,
     required: true,
     trim: true,
     unique: true,
-    match: /^[A-Za-z0-9_\-.]{1,16}$/,
+    match: /^[A-Za-z0-9_\-.@]{1,254}$/,
   },
   phone: {
     type: String,
@@ -42,7 +42,7 @@ const UserAccountSchema = new mongoose.Schema({
   inviteCode: {
     type: String,
     trim: true,
-    match: /^[A-Za-z0-9_\-.]{1,16}$/,
+    match: /^[A-Za-z0-9_\-.]{1,8}$/,
   },
   salt: {
     type: Buffer,

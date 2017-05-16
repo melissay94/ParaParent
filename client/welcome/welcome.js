@@ -1,151 +1,99 @@
-
-const renderServicesBar = function() {
+// Set up the nav bar 
+const renderNavBar = function() {
 	return (
-		<div className="services">
-			<h3>Our Services</h3>
-			<div className="row">
-				<div className="col-md-3 serviceIcon" id="delivery">
-					<img src="assets/img/DeliveryIcon.png" />
-					<h3>Delivery</h3>
+		<div className="container">
+				<div className="navbar-header">
+					<h3 href="#" className="navbar-brand">ParaParent</h3>
 				</div>
-				<div className="col-md-3 serviceIcon" id="cleanup">
-					<img src="assets/img/CleanIcon.png" />
-					<h3>Tidy Up</h3>
-				</div>
-				<div className="col-md-3 serviceIcon" id="rides">
-					<img src="assets/img/RideIcon.png" />
-					<h3>Rides</h3>
-				</div>
-				<div className="col-md-3 serviceIcon" id="errands">
-					<img src="assets/img/ErrandIcon.png" />
-					<h3>Errands</h3>
+				<div className="collapse navbar-collapse">
+					<ul className="nav navbar-nav">
+						<li><a href="#userServices">Our Services</a></li>
+						<li><a href="#whyUs">Why Us</a></li>
+						<li id="loginLi"><a href="#loginModal" className="btn" id="login" data-toggle="modal">Login</a></li>
+					</ul>
 				</div>
 			</div>
-			<div id="serviceExplained">
-			</div>
-		</div>
-		);
+	);
 };
 
-const renderDeliverySection = () => (
-	<div className="serviceExplanation jumbotron">
-		<h4>Cannot get what you need from the supermarket?</h4>
-		<p>Let us bring you what you need for the day, including over the counter medicine</p>
-	</div>
+// Set up the login modal
+const renderLoginModal = function() {
+	return (
+			<div className="modal-dialog">
+			<div className="modal-content">
+				<div className="modal-header">
+					<ul className="nav row">
+						<li className="nav-item col-sm-6">
+							<a className="nav-link form-nav" id="userLoginButton" href="/signup">Customer</a>
+						</li>
+						<li className="nav-item col-sm-6">
+							<a className="nav-link form-nav" id="wokerLoginButton" href="/apply">Worker</a>
+						</li>
+					</ul>
+				</div>
+				<div className="modal-body">
+					<div id="userPopup"></div>
+					<div className="errorMessage"></div>
+				</div>
+			</div>
+		</div>
 	);
+};
 
-const renderCleanSection = () => (
-	<div className="serviceExplanation jumbotron">
-		<h4>Do not have the energy to tidy up?</h4>
-		<p>Our workers will come over and do some light cleaning for you, like dishes or running some laundry</p>
-	</div>
+// Set up the main form base
+const renderMainForm = function() {
+	return (
+		<div>
+			<div className="container-fluid">
+				<ul className="nav row">
+					<li className="nav-item col-sm-6">
+						<a className="nav-link form-nav" id="signupButton" href="/signup">Sign Up</a>
+					</li>
+					<li className="nav-item col-sm-6">
+						<a className="nav-link form-nav" id="applyButton" href="/apply">Apply to Us</a>
+					</li>
+				</ul>
+			</div>
+			<div id="userInfo" className="container">
+			</div>
+			<div className="errorMessage"></div>
+		</div>
 	);
+};
 
-const renderRidesSection = () => (
-	<div className="serviceExplanation jumbotron">
-		<h4>Need to be somewhere but cannot drive?</h4>
-		<p>We will gladly pick you up! We will even come get you again to take you home</p>
-	</div>
-	);
-
-
-const renderErrandsSection = () => (
-	<div className="serviceExplanation jumbotron">
-		<h4>Got some small things that just need to get done?</h4>
-		<p>We can do it! Deliver a package, drop off some notes at your work, we have got it.</p>
-	</div>
-	);
-
-
-const createServicesComp = function(csrf) {
-	const ServicesComp = React.createClass({
-		render: renderServicesBar
+// Set up all the buttons for the page and all the components
+const setup = function(csrf) {
+	
+	// Set up the navbar
+	const NavBarComp = React.createClass({
+		render: renderNavBar
 	});
 	
 	ReactDOM.render(
-		<ServicesComp csrf={csrf} />,
-		document.querySelector("#userServices")
-		);
-};
-
-const createDeliveryComp = function(csrf) {
-	const DeliveryComp = React.createClass({
-		render: renderDeliverySection
+		<NavBarComp />,
+		document.querySelector("#navigation")
+	);
+	
+	// Set up the modal 
+	const LoginModalComp = React.createClass({
+		render: renderLoginModal
 	});
-
+	
 	ReactDOM.render(
-		<DeliveryComp csrf={csrf} />,
-		document.querySelector("#serviceExplained")
-		);
-};
-
-const createCleanUpComp = function(csrf) {
-	const CleanUpComp = React.createClass({
-		render: renderCleanSection
+		<LoginModalComp />,
+		document.querySelector("#loginModal")
+	);
+	
+	// Set up the base form
+	const MainFormComp = React.createClass({
+		render: renderMainForm
 	});
-
+	
 	ReactDOM.render(
-		<CleanUpComp csrf={csrf} />,
-		document.querySelector("#serviceExplained")
-		);
-};
-
-const createRidesComp = function(csrf) {
-	const RidesComp = React.createClass({
-		render: renderRidesSection
-	});
-
-	ReactDOM.render(
-		<RidesComp csrf={csrf} />,
-		document.querySelector("#serviceExplained")
-		);
-};
-
-const createErrandsComp = function(csrf) {
-	const ErrandsComp = React.createClass({
-		render: renderErrandsSection
-	});
-
-	ReactDOM.render(
-		<ErrandsComp csrf={csrf} />,
-		document.querySelector("#serviceExplained")
-		);
-};
-
-const checkSelected = function(csrf) {
-	const deliveryButton = document.querySelector("#delivery");
-	const cleanupButton = document.querySelector("#cleanup");
-	const ridesButton = document.querySelector("#rides");
-	const errandsButton = document.querySelector("#errands");
-
-	deliveryButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		createDeliveryComp(csrf);
-		return false;
-	});
-
-	cleanupButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		createCleanUpComp(csrf);
-		return false;
-	})
-
-	ridesButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		createRidesComp(csrf);
-		return false;
-	});
-
-	errandsButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		createErrandsComp(csrf);
-		return false;
-	});
-
-	createDeliveryComp(csrf);
-};
-
-const setup = function(csrf) {
+		<MainFormComp />,
+		document.querySelector("#mainForm")
+	);
+	
 	const applyButton = document.querySelector("#applyButton");
 	const signupButton = document.querySelector("#signupButton");
 	const login = document.querySelector("#login");
@@ -184,6 +132,6 @@ const setup = function(csrf) {
 	
 	createSignupComp(csrf);
 	createServicesComp(csrf);
-	checkSelected(csrf);
+	checkSelected();
 	
 }
