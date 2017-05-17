@@ -21,6 +21,18 @@ const handleJobs = (e) => {
 	
 	handleError("Your job has been submitted");
 	
+	// Reset all the pluses and all fields to empty
+	jobListAdd = "";
+	document.querySelector("#addDelivery").style = "color: black;";
+	document.querySelector("#addClean").style = "color: black;";
+	document.querySelector("#addRides").style = "color: black;";
+	document.querySelector("#addErrands").style = "color: black;";
+	
+	document.querySelector("#jobService").value = "";	
+	document.querySelector("#jobTime").value = "";	
+	document.querySelector("#jobAddress").value = "";	
+	document.querySelector("#jobPayment").value = "";
+	
 	return false;
 };
 
@@ -33,12 +45,39 @@ const handleJobSelect = (jobType) => {
 			document.querySelector(name).style = "color: lightgreen;";
 	}
 	else {
-		console.log("hi ", jobType + " ");
 		jobListAdd = jobListAdd.replace(jobType, "");
 		document.querySelector(name).style = "color: black;";
 	}
 	
-	console.log(jobListAdd);
+};
+
+// Hook up buttons
+const handleJobButtons = () => {
+	const deliveryButton = document.querySelector("#addDelivery");
+	const cleanButton = document.querySelector("#addClean");
+	const ridesButton = document.querySelector("#addRides");
+	const errandsButton = document.querySelector("#addErrands");
+	
+	deliveryButton.addEventListener("click", (e) => {
+		e.preventDefault();
+		handleJobSelect("Delivery");
+		return false;
+	});
+	cleanButton.addEventListener("click", (e) => {
+		e.preventDefault();
+		handleJobSelect("Clean");
+		return false;
+	});
+	ridesButton.addEventListener("click", (e) => {
+		e.preventDefault();
+		handleJobSelect("Rides");
+		return false;
+	});
+	errandsButton.addEventListener("click", (e) => {
+		e.preventDefault();
+		handleJobSelect("Errands");
+		return false;
+	})
 };
 
 // Renders the options grid to lead to the modal form
@@ -140,7 +179,7 @@ const renderJobForm = function() {
 						</div>
 						<div className="form-group">
 							<label htmlFor="time">Fill out a Time: </label>
-							<input className="form-control" type="text" name="time" placeholder="Enter Time (ASAP accepted)" />
+							<input id="jobTime" className="form-control" type="text" name="time" placeholder="Enter Time (ASAP accepted)" />
 						</div>
 						<div className="form-group">
 							<label htmlFor="address">Fill out Address: </label>
@@ -148,7 +187,7 @@ const renderJobForm = function() {
 						</div>
 						<div className="form-group">
 							<label htmlFor="payment">Fill out payment option: </label>
-							<input className="form-control" type="text" name="payment" placeholder="Enter card number" />
+							<input id="jobPayment" className="form-control" type="text" name="payment" placeholder="Enter card number" />
 						</div>
 						<div className="form-group">
 							<div  className="container">

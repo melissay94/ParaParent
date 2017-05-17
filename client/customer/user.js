@@ -7,7 +7,7 @@ const renderNavBar = function() {
 				</div>
 				<div className="collapse navbar-collapse">
 					<ul className="nav navbar-nav">
-						<li className="userLink" id="#useraccount"><a href="#">Account</a></li>
+						<li className="userLink"><a href="#"  id="#useraccount">Account</a></li>
 						<li className="userLink"><a href="/logout">Logout</a></li>
 					</ul>
 				</div>
@@ -55,22 +55,12 @@ const setup = function(csrf) {
 		render: renderChangePass
 	});
 	
-	ReactDOM.render(
-		<NavBarComp />,
-		document.querySelector("#navigation")
-	);
-	
 	const JobFormModal = React.createClass({
 		handleSubmit: handleJobs,
 		render: renderJobForm,
 	});
 	
-	ReactDOM.render(
-		<ContentComp />,
-		document.querySelector("#userContent")
-	);
-	
-	// Set up submission form
+		// Set up submission form
 	JobFormClass = React.createClass({
 			render: renderJobSelect,
 	});
@@ -91,40 +81,31 @@ const setup = function(csrf) {
 		render: renderJobList
 	});
 	
+	ReactDOM.render(
+		<NavBarComp />,
+		document.querySelector("#navigation")
+	);
+	
+	ReactDOM.render(
+		<ContentComp />,
+		document.querySelector("#userContent")
+	);
+	
 	jobForm = ReactDOM.render(
 		<JobFormClass />, 
 		document.querySelector('#addJob')
 	);
 	
-	// Hook up all the plus buttons
-	const deliveryButton = document.querySelector("#addDelivery");
-	const cleanButton = document.querySelector("#addClean");
-	const ridesButton = document.querySelector("#addRides");
-	const errandsButton = document.querySelector("#addErrands");
+	jobListRenderer = ReactDOM.render(
+		<JobListClass csrf={csrf} />, document.querySelector('#jobs')
+	);
+	
 	const sumbitButton = document.querySelector("#startForm");
 	const accountButton = document.querySelector("#useraccount");
 	
-	deliveryButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Delivery");
-		return false;
-	});
-	cleanButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Clean");
-		return false;
-	});
-	ridesButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Rides");
-		return false;
-	});
-	errandsButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		handleJobSelect("Errands");
-		return false;
-	})
-	startForm.addEventListener("click", (e) => {
+	handleJobButtons();
+
+	submitButton.addEventListener("click", (e) => {
 		e.preventDefault();
 		ReactDOM.render(
 			<JobFormModal csrf={csrf} />,
@@ -133,9 +114,13 @@ const setup = function(csrf) {
 		return false;
 	});
 	
-	jobListRenderer = ReactDOM.render(
-		<JobListClass csrf={csrf} />, document.querySelector('#jobs')
-	);
+	accountButton.addEventListener("click", (e) => {
+		e.preventDefault();
+		ReactDOM.render(
+			<OptionsWindow csrf={csrf} />,
+			document.querySelector("#userContent");
+		);
+	});
 
 
 };

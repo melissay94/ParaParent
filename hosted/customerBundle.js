@@ -58,10 +58,10 @@ var renderNavBar = function renderNavBar() {
 				{ className: "nav navbar-nav" },
 				React.createElement(
 					"li",
-					{ className: "userLink", id: "#useraccount" },
+					{ className: "userLink" },
 					React.createElement(
 						"a",
-						{ href: "#" },
+						{ href: "#", id: "#useraccount" },
 						"Account"
 					)
 				),
@@ -151,16 +151,12 @@ var setup = function setup(csrf) {
 		render: renderChangePass
 	});
 
-	ReactDOM.render(React.createElement(NavBarComp, null), document.querySelector("#navigation"));
-
 	var JobFormModal = React.createClass({
 		displayName: "JobFormModal",
 
 		handleSubmit: handleJobs,
 		render: renderJobForm
 	});
-
-	ReactDOM.render(React.createElement(ContentComp, null), document.querySelector("#userContent"));
 
 	// Set up submission form
 	JobFormClass = React.createClass({
@@ -187,43 +183,26 @@ var setup = function setup(csrf) {
 		render: renderJobList
 	});
 
+	ReactDOM.render(React.createElement(NavBarComp, null), document.querySelector("#navigation"));
+
+	ReactDOM.render(React.createElement(ContentComp, null), document.querySelector("#userContent"));
+
 	jobForm = ReactDOM.render(React.createElement(JobFormClass, null), document.querySelector('#addJob'));
 
-	// Hook up all the plus buttons
-	var deliveryButton = document.querySelector("#addDelivery");
-	var cleanButton = document.querySelector("#addClean");
-	var ridesButton = document.querySelector("#addRides");
-	var errandsButton = document.querySelector("#addErrands");
+	jobListRenderer = ReactDOM.render(React.createElement(JobListClass, { csrf: csrf }), document.querySelector('#jobs'));
+
 	var sumbitButton = document.querySelector("#startForm");
 	var accountButton = document.querySelector("#useraccount");
 
-	deliveryButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		handleJobSelect("Delivery");
-		return false;
-	});
-	cleanButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		handleJobSelect("Clean");
-		return false;
-	});
-	ridesButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		handleJobSelect("Rides");
-		return false;
-	});
-	errandsButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		handleJobSelect("Errands");
-		return false;
-	});
+	handleJobButtons();
+
 	startForm.addEventListener("click", function (e) {
 		e.preventDefault();
 		ReactDOM.render(React.createElement(JobFormModal, { csrf: csrf }), document.querySelector("#serviceModal"));
 		return false;
 	});
 
-	jobListRenderer = ReactDOM.render(React.createElement(JobListClass, { csrf: csrf }), document.querySelector('#jobs'));
+	accountButton;
 };
 "use strict";
 
@@ -248,6 +227,18 @@ var handleJobs = function handleJobs(e) {
 
 	handleError("Your job has been submitted");
 
+	// Reset all the pluses and all fields to empty
+	jobListAdd = "";
+	document.querySelector("#addDelivery").style = "color: black;";
+	document.querySelector("#addClean").style = "color: black;";
+	document.querySelector("#addRides").style = "color: black;";
+	document.querySelector("#addErrands").style = "color: black;";
+
+	document.querySelector("#jobService").value = "";
+	document.querySelector("#jobTime").value = "";
+	document.querySelector("#jobAddress").value = "";
+	document.querySelector("#jobPayment").value = "";
+
 	return false;
 };
 
@@ -259,12 +250,38 @@ var handleJobSelect = function handleJobSelect(jobType) {
 		jobListAdd += jobType + " ";
 		document.querySelector(name).style = "color: lightgreen;";
 	} else {
-		console.log("hi ", jobType + " ");
 		jobListAdd = jobListAdd.replace(jobType, "");
 		document.querySelector(name).style = "color: black;";
 	}
+};
 
-	console.log(jobListAdd);
+// Hook up buttons
+var handleJobButtons = function handleJobButtons() {
+	var deliveryButton = document.querySelector("#addDelivery");
+	var cleanButton = document.querySelector("#addClean");
+	var ridesButton = document.querySelector("#addRides");
+	var errandsButton = document.querySelector("#addErrands");
+
+	deliveryButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Delivery");
+		return false;
+	});
+	cleanButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Clean");
+		return false;
+	});
+	ridesButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Rides");
+		return false;
+	});
+	errandsButton.addEventListener("click", function (e) {
+		e.preventDefault();
+		handleJobSelect("Errands");
+		return false;
+	});
 };
 
 // Renders the options grid to lead to the modal form
@@ -487,7 +504,7 @@ var renderJobForm = function renderJobForm() {
 							{ htmlFor: "time" },
 							"Fill out a Time: "
 						),
-						React.createElement("input", { className: "form-control", type: "text", name: "time", placeholder: "Enter Time (ASAP accepted)" })
+						React.createElement("input", { id: "jobTime", className: "form-control", type: "text", name: "time", placeholder: "Enter Time (ASAP accepted)" })
 					),
 					React.createElement(
 						"div",
@@ -507,7 +524,7 @@ var renderJobForm = function renderJobForm() {
 							{ htmlFor: "payment" },
 							"Fill out payment option: "
 						),
-						React.createElement("input", { className: "form-control", type: "text", name: "payment", placeholder: "Enter card number" })
+						React.createElement("input", { id: "jobPayment", className: "form-control", type: "text", name: "payment", placeholder: "Enter card number" })
 					),
 					React.createElement(
 						"div",
