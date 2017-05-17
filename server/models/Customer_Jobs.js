@@ -36,6 +36,12 @@ const CustomerJobsSchema = new mongoose.Schema({
     trim: true,
     set: setString,
   },
+	status: {
+		type: String,
+		required: true,
+		trim: true, 
+		set: setString,
+	},
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -59,7 +65,7 @@ CustomerJobsSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return CustomerJobsModel.find(search).select('service worker review paid status').exec(callback);
+  return CustomerJobsModel.find(search).select('service status createdDate').exec(callback);
 };
 
 CustomerJobsModel = mongoose.model('CustomerJobs', CustomerJobsSchema);

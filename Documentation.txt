@@ -1,0 +1,15 @@
+Documentation for ParaParent
+
+Site Purpose: ParaParent is a service site for people who are sick and by themselves and in need of certain simple services that they just can't do on their own.
+
+The profits: It would be profitable as a self employment site, kind of like Uber. So for every job we recieve, there is a cut of profits for us after we have paid the employees for their hours worked. 
+
+React: It is being used to make basically all of the components for the site. 
+
+MVC: Its the same way we used it in class for the DomoMaker and how I used it for the last project too. 
+
+Mongo: Stores and fetches account data and stores job requests.
+
+Templating language: I used handlebars to work with react. Its neat. 
+
+Above and Beyond: My front page is so beautiful. I spent a lot of extra time trying to make my site look like a real site. I also made it a two way site in that you can sign up as a user or as a worker. I may have stolen a lot of ideas from the uber site. 

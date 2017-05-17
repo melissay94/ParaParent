@@ -33,8 +33,8 @@ const handleJobSelect = (jobType) => {
 			document.querySelector(name).style = "color: lightgreen;";
 	}
 	else {
-		console.log("hi ", jobListAdd.indexOf(jobType));
-		jobListAdd.replace(jobType, "");
+		console.log("hi ", jobType + " ");
+		jobListAdd = jobListAdd.replace(jobType, "");
 		document.querySelector(name).style = "color: black;";
 	}
 	
@@ -45,6 +45,7 @@ const handleJobSelect = (jobType) => {
 const renderJobSelect = function() {
 	return (
 		<div className="container-fluid">
+			<h3>Select Desired Services</h3>
 			<div className="row">
 				<div className="col-md-6">
 					<div className="col-md-10">
@@ -110,7 +111,9 @@ const renderJobSelect = function() {
 				</div>
 			</div>
 			<div className="row">
-				<a className="btn" href="#serviceModal" id="startForm" data-toggle="modal">Submit</a>
+				<div className="col-md-12">
+					<a className="btn" href="#serviceModal" id="startForm" data-toggle="modal">Submit</a>
+				</div>
 			</div>
 		</div>
 	);
@@ -137,7 +140,7 @@ const renderJobForm = function() {
 						</div>
 						<div className="form-group">
 							<label htmlFor="time">Fill out a Time: </label>
-							<input className="form-control" type="text" name="payment" placeholder="Enter card number" />
+							<input className="form-control" type="text" name="time" placeholder="Enter Time (ASAP accepted)" />
 						</div>
 						<div className="form-group">
 							<label htmlFor="address">Fill out Address: </label>
@@ -165,16 +168,19 @@ const renderJobForm = function() {
 const renderJobList = function() {
 	if (this.state.data.length === 0) {
 		return (
-			<div className="jobList">
-				<h3 className="emptyList">You have no requests</h3>
+			<div className="jobList row">
+				<h4 className="emptyList col-md-6">No request history at this time.</h4>
 			</div>
 		);
 	}
+	console.log(this.state.data);
 	
 	const jobNodes = this.state.data.map(function(job){
 		return (
-			<div key={job._id} className="job">
-				<h3 className="service">{job.name}</h3>
+			<div key={job._id} className="job row">
+				<h4 className="service col-md-6">{job.service}</h4>
+				<h4 className="service col-md-3">{job.createdDate}</h4>
+				<h4 className="service col-md-3">{job.status}</h4>
 			</div>
 		);
 	});

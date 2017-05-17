@@ -8,9 +8,6 @@ body {
 	margin-bottom: 0px;
 	border: none;
 }
-.navbar-default .navbar-header {
-	width: 12%;
-}
 .navbar-default .navbar-header h3{
 	color: #6BB6D6;
 	font-size: 30px;
@@ -19,15 +16,10 @@ body {
 	padding: 0px;
 }
 .navbar-nav {
-	width: 88%;
 	display: inline-block;
 }
 .navbar-default li{
 	padding-top: 10px;
-}
-#loginLi {
-	float: right; 
-	margin-right: -205px;
 }
 #loginLi a {
 	font-weight: bold;
@@ -56,11 +48,41 @@ body {
 }
 .new-user {
 	position: absolute;
-	min-height: 880px;
+	padding-top: 30px;
 	right: 40px;
 	top: 120px;
 	background-color: #6BB6D6;
-	padding-top: 30px;
+	
+}
+@media screen and (min-width: 1700px) {
+	.new-user {
+		padding-top: 30px;
+		min-height: 1000px;
+	}
+}
+@media screen and (min-width: 1500px) and (max-width: 1699px) {
+	.new-user {
+		min-height: 900px;
+	}
+}
+@media screen and (min-width: 1300px) and (max-width: 1499px){
+	.new-user {
+		min-height: 800px;
+	}
+}
+@media screen and (min-width: 1100px) and (max-width: 1299px){
+	.new-user {
+		min-height: 700px;
+	}
+}
+@media screen and (max-width:1099px) {
+	.new-user {
+		position:relative;
+		float: none;
+		right: 0px;
+		top: 0px;
+		margin: 0 auto;
+	}
 }
 .new-user .btn, #userPopup .btn, #addJob .btn {
 	border-radius: 0px;
@@ -155,6 +177,7 @@ body {
 #addJob {
 	background-color: #6BB6D6;
 	text-align: center;
+	margin: 0px 60px 0px 60px;
 }
 #addJob .container-fluid {
 	width: 80%;
@@ -183,7 +206,23 @@ body {
 	font-weight: bold;
 	font-family: "Roboto", sans-serif;
 	font-size: 30px;
+	padding-bottom: 20px;
 }
 #addJob img {
 	width: 100px;
+}
+#jobHistory {
+	padding: 20px 60px 0px 60px;
+}
+
+#jobHistory h3 {
+	text-align: center;
+	font-weight: bold;
+}
+#historyHeader {
+	border-bottom: 3px #6BB6D6 solid;
+}
+#historyHeader h3 {
+	text-align: left;
+	font-weight: normal;
 }

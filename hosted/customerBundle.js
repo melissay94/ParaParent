@@ -83,9 +83,49 @@ var renderNavBar = function renderNavBar() {
 var renderUserService = function renderUserService() {
 	return React.createElement(
 		"div",
-		null,
+		{ id: "jobContent" },
 		React.createElement("div", { id: "addJob" }),
-		React.createElement("div", { id: "jobs" })
+		React.createElement(
+			"div",
+			{ id: "jobHistory", className: "container-fluid" },
+			React.createElement(
+				"h3",
+				null,
+				"Service Request History"
+			),
+			React.createElement(
+				"div",
+				{ className: "row", id: "historyHeader" },
+				React.createElement(
+					"div",
+					{ className: "col-md-6" },
+					React.createElement(
+						"h3",
+						null,
+						"Services"
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "col-md-3" },
+					React.createElement(
+						"h3",
+						null,
+						"Date"
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "col-md-3" },
+					React.createElement(
+						"h3",
+						null,
+						"Status"
+					)
+				)
+			),
+			React.createElement("div", { id: "jobs" })
+		)
 	);
 };
 
@@ -182,11 +222,6 @@ var setup = function setup(csrf) {
 		ReactDOM.render(React.createElement(JobFormModal, { csrf: csrf }), document.querySelector("#serviceModal"));
 		return false;
 	});
-	accountButton.addEventListener("click", function (e) {
-		e.preventDefault();
-		ReactDOM.render(React.createElement(OptionsWindow, { csrf: csrf }), document.querySelector("#userContent"));
-		return false;
-	});
 
 	jobListRenderer = ReactDOM.render(React.createElement(JobListClass, { csrf: csrf }), document.querySelector('#jobs'));
 };
@@ -224,8 +259,8 @@ var handleJobSelect = function handleJobSelect(jobType) {
 		jobListAdd += jobType + " ";
 		document.querySelector(name).style = "color: lightgreen;";
 	} else {
-		console.log("hi ", jobListAdd.indexOf(jobType));
-		jobListAdd.replace(jobType, "");
+		console.log("hi ", jobType + " ");
+		jobListAdd = jobListAdd.replace(jobType, "");
 		document.querySelector(name).style = "color: black;";
 	}
 
@@ -237,6 +272,11 @@ var renderJobSelect = function renderJobSelect() {
 	return React.createElement(
 		"div",
 		{ className: "container-fluid" },
+		React.createElement(
+			"h3",
+			null,
+			"Select Desired Services"
+		),
 		React.createElement(
 			"div",
 			{ className: "row" },
@@ -389,9 +429,13 @@ var renderJobSelect = function renderJobSelect() {
 			"div",
 			{ className: "row" },
 			React.createElement(
-				"a",
-				{ className: "btn", href: "#serviceModal", id: "startForm", "data-toggle": "modal" },
-				"Submit"
+				"div",
+				{ className: "col-md-12" },
+				React.createElement(
+					"a",
+					{ className: "btn", href: "#serviceModal", id: "startForm", "data-toggle": "modal" },
+					"Submit"
+				)
 			)
 		)
 	);
@@ -443,7 +487,7 @@ var renderJobForm = function renderJobForm() {
 							{ htmlFor: "time" },
 							"Fill out a Time: "
 						),
-						React.createElement("input", { className: "form-control", type: "text", name: "payment", placeholder: "Enter card number" })
+						React.createElement("input", { className: "form-control", type: "text", name: "time", placeholder: "Enter Time (ASAP accepted)" })
 					),
 					React.createElement(
 						"div",
@@ -487,23 +531,34 @@ var renderJobList = function renderJobList() {
 	if (this.state.data.length === 0) {
 		return React.createElement(
 			"div",
-			{ className: "jobList" },
+			{ className: "jobList row" },
 			React.createElement(
-				"h3",
-				{ className: "emptyList" },
-				"You have no requests"
+				"h4",
+				{ className: "emptyList col-md-6" },
+				"No request history at this time."
 			)
 		);
 	}
+	console.log(this.state.data);
 
 	var jobNodes = this.state.data.map(function (job) {
 		return React.createElement(
 			"div",
-			{ key: job._id, className: "job" },
+			{ key: job._id, className: "job row" },
 			React.createElement(
-				"h3",
-				{ className: "service" },
-				job.name
+				"h4",
+				{ className: "service col-md-6" },
+				job.service
+			),
+			React.createElement(
+				"h4",
+				{ className: "service col-md-3" },
+				job.createdDate
+			),
+			React.createElement(
+				"h4",
+				{ className: "service col-md-3" },
+				job.status
 			)
 		);
 	});

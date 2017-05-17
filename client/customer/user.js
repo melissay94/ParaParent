@@ -1,5 +1,3 @@
-
-
 // Renders the navigation bar
 const renderNavBar = function() {
 	return (
@@ -20,9 +18,23 @@ const renderNavBar = function() {
 // Renders the content
 const renderUserService = function() {
 	return (
-		<div>
+		<div id="jobContent">
 			<div id="addJob"></div>
-			<div id="jobs"></div>
+			<div id="jobHistory" className="container-fluid">
+				<h3>Service Request History</h3>
+				<div className="row" id="historyHeader">
+					<div className="col-md-6">
+						<h3>Services</h3>
+					</div>
+					<div className="col-md-3">
+						<h3>Date</h3>
+					</div>
+					<div className="col-md-3">
+						<h3>Status</h3>
+					</div>
+				</div>
+				<div id="jobs"></div>
+			</div>
 		</div>
 	);
 };
@@ -120,14 +132,6 @@ const setup = function(csrf) {
 		);
 		return false;
 	});
-	accountButton.addEventListener("click", (e) => {
-		e.preventDefault();
-		ReactDOM.render(
-			<OptionsWindow csrf={csrf} />,
-			document.querySelector("#userContent")
-		);
-		return false;
-	})
 	
 	jobListRenderer = ReactDOM.render(
 		<JobListClass csrf={csrf} />, document.querySelector('#jobs')
