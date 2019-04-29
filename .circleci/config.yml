@@ -6,7 +6,7 @@ jobs:
       - image: circleci/node:6.4.1
       - image: mongo:3.4
     steps:
-      - chekout
+      - checkout
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@6.4.1'
