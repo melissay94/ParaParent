@@ -28,13 +28,13 @@ const makeRequest = (req, res) => {
   if (!req.body.service || !req.body.time || !req.body.address || !req.body.payment) {
     return res.status(400).json({ error: 'All fields required' });
   }
-	
+
   const jobData = {
     service: req.body.service,
     time: req.body.time,
     address: req.body.address,
     payment: req.body.payment,
-		status: "Pending",
+    status: 'Pending',
     owner: req.session.account._id,
   };
 

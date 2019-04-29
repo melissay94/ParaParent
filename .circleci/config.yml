@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/paraparent
+    docker:
+      - image: circleci/node:6.4.1
+      - image: mongo:3.4
+    steps:
+      - chekout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@6.4.1'
+      - restore-cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-dependencies
+          command: npm install
+      - save-cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node-modules
+      - run:
+          name: test
+          command: npm test
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_test_results:
+          path: test-results.xml

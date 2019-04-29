@@ -36,12 +36,12 @@ const CustomerJobsSchema = new mongoose.Schema({
     trim: true,
     set: setString,
   },
-	status: {
-		type: String,
-		required: true,
-		trim: true, 
-		set: setString,
-	},
+  status: {
+    type: String,
+    required: true,
+    trim: true,
+    set: setString,
+  },
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
