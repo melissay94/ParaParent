@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/paraparent
     docker:
-      - image: circleci/node:6.4.1
+      - image: circleci/node:10.15.1
       - image: mongo:3.4
     steps:
       - checkout
