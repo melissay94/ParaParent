@@ -6,9 +6,6 @@ jobs:
       - image: circleci/node:10.15.1
       - image: mongo:3.4
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "88:56:fb:39:c5:a6:bc:31:6c:54:af:0b:d9:3f:e0:b8"
       - checkout
       - run:
           name: update-npm
