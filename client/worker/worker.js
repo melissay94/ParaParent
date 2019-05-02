@@ -1,5 +1,3 @@
-
-
 // Renders the navigation bar
 const renderNavBar = function() {
 	return (
