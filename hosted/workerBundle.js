@@ -1,38 +1,38 @@
-"use strict";
+'use strict';
 
 var handleError = function handleError(message) {
-	$(".errorMessage").text(message);
+  $('.errorMessage').text(message);
 };
 
 var redirect = function redirect(response) {
-	window.location = response.redirect;
+  window.location = response.redirect;
 };
 
 // Sends the request
 var sendAjax = function sendAjax(type, action, data, success) {
-	$.ajax({
-		cache: false,
-		type: type,
-		url: action,
-		data: data,
-		dataType: "json",
-		success: success,
-		error: function error(xhr, status, _error) {
-			var msgObj = JSON.parse(xhr.responseText);
-			handleError(msgObj.error);
-		}
-	});
+  $.ajax({
+    cache: false,
+    type: type,
+    url: action,
+    data: data,
+    dataType: 'json',
+    success: success,
+    error: function error(xhr) {
+      var msgObj = JSON.parse(xhr.responseText);
+      handleError(msgObj.error);
+    }
+  });
 };
 
 // Gets a csrf token to be used
 var getToken = function getToken() {
-	sendAjax('GET', '/getToken', null, function (result) {
-		setup(result.csrfToken);
-	});
+  sendAjax('GET', '/getToken', null, function (result) {
+    setup(result.csrfToken);
+  });
 };
 
 $(document).ready(function () {
-	getToken();
+  getToken();
 });
 "use strict";
 
@@ -141,40 +141,6 @@ var setup = function setup(csrf) {
 };
 "use strict";
 
-// Renders a list of old jobs
-var renderJobList = function renderJobList() {
-	if (this.state.data.length === 0) {
-		return React.createElement(
-			"div",
-			{ className: "jobList" },
-			React.createElement(
-				"h3",
-				{ className: "emptyList" },
-				"You have no requests"
-			)
-		);
-	}
-
-	var jobNodes = this.state.data.map(function (job) {
-		return React.createElement(
-			"div",
-			{ key: job._id, className: "job" },
-			React.createElement(
-				"h3",
-				{ className: "service" },
-				job.name
-			)
-		);
-	});
-
-	return React.createElement(
-		"div",
-		{ className: "jobList" },
-		jobNodes
-	);
-};
-"use strict";
-
 // Handles the request to change password
 var handleChange = function handleChange(e) {
 	e.preventDefault();
@@ -258,5 +224,39 @@ var renderChangePass = function renderChangePass() {
 				React.createElement("input", { className: "formSubmit btn", type: "submit", value: "Reset Password" })
 			)
 		)
+	);
+};
+"use strict";
+
+// Renders a list of old jobs
+var renderJobList = function renderJobList() {
+	if (this.state.data.length === 0) {
+		return React.createElement(
+			"div",
+			{ className: "jobList" },
+			React.createElement(
+				"h3",
+				{ className: "emptyList" },
+				"You have no requests"
+			)
+		);
+	}
+
+	var jobNodes = this.state.data.map(function (job) {
+		return React.createElement(
+			"div",
+			{ key: job._id, className: "job" },
+			React.createElement(
+				"h3",
+				{ className: "service" },
+				job.name
+			)
+		);
+	});
+
+	return React.createElement(
+		"div",
+		{ className: "jobList" },
+		jobNodes
 	);
 };
